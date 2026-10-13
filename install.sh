@@ -51,6 +51,8 @@ fi
 info "3/3 Conferência"
 n=$(ls "$DEST/playbooks" 2>/dev/null | wc -l | tr -d ' '); ok "$n playbooks em $DEST/playbooks"
 [ -f "$HOME/.claude/skills/ads/SKILL.md" ] && ok "/ads instalado" || warn "/ads não encontrado"
-a=$(ls "$HOME/.claude/agents" 2>/dev/null | grep -c '^audit-' || true); ok "$a agentes de auditoria"
+a=$(ls "$HOME/.claude/agents" 2>/dev/null | grep -c '^audit-' || true)
+t=$(ls "$DEST/vendor/claude-ads/agents" 2>/dev/null | while read f; do [ -f "$HOME/.claude/agents/$f" ] && echo x; done | wc -l | tr -d ' ')
+ok "$t agentes do claude-ads instalados ($a de auditoria por plataforma)"
 echo
 echo "Pronto. Reinicie o Claude Code e peça: /ojhon ajuda"
