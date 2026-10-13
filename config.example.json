@@ -1,0 +1,7 @@
+{
+  "moeda": "BRL",
+  "plataformas_padrao": ["meta", "google"],
+  "modo_mudancas": "rascunho",
+  "ponte_ogab": true,
+  "relatorio_formato": "markdown"
+}

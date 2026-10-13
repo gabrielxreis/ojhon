@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="220" viewBox="0 0 900 220">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#132b24"/>
+    </linearGradient>
+    <linearGradient id="tx" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2fd38a"/>
+      <stop offset="1" stop-color="#9df0c4"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="220" rx="18" fill="url(#bg)"/>
+  <g fill="none" stroke="#24463a" stroke-width="2">
+    <rect x="40" y="60" width="72" height="100" rx="10"/>
+  </g>
+  <g fill="#2fd38a">
+    <rect x="52" y="122" width="12" height="26" rx="2"/>
+    <rect x="70" y="104" width="12" height="44" rx="2"/>
+    <rect x="88" y="84" width="12" height="64" rx="2"/>
+  </g>
+  <text x="140" y="128" font-family="Poppins, Inter, Helvetica, Arial, sans-serif" font-size="92" font-weight="800" fill="url(#tx)">/ojhon</text>
+  <text x="142" y="168" font-family="Poppins, Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#c9d1d9">o gestor de tráfego com IA</text>
+  <g font-family="Menlo, monospace" font-size="15" fill="#6e7681">
+    <text x="590" y="62">auditoria › plano › verba</text>
+    <text x="590" y="86">criativo › teste › rastreio</text>
+    <text x="590" y="110">relatório › ponte com o /ogab</text>
+  </g>
+</svg>
