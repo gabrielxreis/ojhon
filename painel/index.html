@@ -833,7 +833,8 @@ const ICO_BAIXAR = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" 
 function botaoBaixar(item, quem) {
   const nome = ('Concorrente - ' + (quem || item.anunciante || '') + ' - ' + item.id + '.mp4').replace(/[\\/:*?"<>|]/g, '');
   if (item.video_local) {
-    const a = document.createElement('a'); a.className = 'baixar'; a.href = item.video_local; a.download = nome;
+    const base = location.protocol.startsWith('http') ? '/' : 'http://127.0.0.1:47830/';
+    const a = document.createElement('a'); a.className = 'baixar'; a.href = base + item.video_local.replace(/^\.\.\//, '') + '?baixar=' + encodeURIComponent(nome);
     a.title = 'Baixar este vídeo'; a.setAttribute('aria-label', 'Baixar o vídeo ' + nome); a.innerHTML = ICO_BAIXAR;
     a.addEventListener('click', (e) => e.stopPropagation());
     return a;
@@ -878,7 +879,7 @@ function desenharConcorrentes() {
     const pq = el('p', 'chefe-pq', chefe.porque);
     const gs = el('div', 'ganchos'); gs.append(el('span', 'rot', 'Ganchos que ele usa'));
     (chefe.ganchos || []).forEach((g) => gs.append(el('span', 'gancho', g)));
-    const cs = el('div', 'camps'); chefe.campeoes.forEach((c) => cs.append(campeao(c)));
+    const cs = el('div', 'camps'); chefe.campeoes.forEach((c) => { const x = campeao(c); x.querySelector('.baixar')?.replaceWith(botaoBaixar(c, chefe.anunciante)); cs.append(x); });
     const ver = el('a', 'link', 'Ver todos os anúncios dele na Biblioteca ↗'); ver.href = chefe.pagina_biblioteca; ver.target = '_blank'; ver.rel = 'noopener';
     h.append(cab, pq, gs, el('h4', null, 'Criativos campeões'), cs, ver);
     wrap.append(h);

@@ -14,6 +14,7 @@ import hashlib
 import json
 import time
 import os
+import socket
 import subprocess
 import sys
 import webbrowser
@@ -22,6 +23,29 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 SKILL = os.path.dirname(AQUI)
 CLIENTES = os.path.join(SKILL, "clientes")
 OBRIGATORIOS = ["cliente", "atualizado", "resumo", "campanhas", "parecer"]
+PORTA = 47830
+URL = f"http://127.0.0.1:{PORTA}/painel/index.html"
+
+
+def servidor_no_ar():
+    try:
+        with socket.create_connection(("127.0.0.1", PORTA), timeout=0.5):
+            return True
+    except OSError:
+        return False
+
+
+def subir_servidor():
+    """Servidor local (servidor.py) para o botão de baixar funcionar; sobe em segundo plano se não estiver rodando."""
+    if servidor_no_ar():
+        return True
+    subprocess.Popen([sys.executable, os.path.join(AQUI, "servidor.py"), "--porta", str(PORTA)],
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, stdin=subprocess.DEVNULL, start_new_session=True)
+    for _ in range(20):
+        time.sleep(0.15)
+        if servidor_no_ar():
+            return True
+    return False
 
 
 def carregar():
@@ -46,11 +70,11 @@ def carregar():
 
 
 def abrir(arquivo):
-    url = "file://" + arquivo
+    url = URL if subir_servidor() else "file://" + arquivo
     if sys.platform == "darwin":
-        subprocess.run(["open", arquivo], check=False)
+        subprocess.run(["open", url], check=False)
     elif os.name == "nt":
-        os.startfile(arquivo)  # type: ignore[attr-defined]
+        os.startfile(url)  # type: ignore[attr-defined]
     else:
         webbrowser.open(url)
     return url
@@ -87,10 +111,11 @@ def main():
     index = os.path.join(AQUI, "index.html")
     marca = os.path.join(AQUI, ".aberto")
     recente = os.path.isfile(marca) and time.time() - os.path.getmtime(marca) < 6 * 3600
+    no_ar = subir_servidor()
     if a.nao_abrir:
-        print("PAINEL_PRONTO: file://" + index)
+        print("PAINEL_PRONTO: " + (URL if no_ar else "file://" + index))
     elif recente and not a.abrir:
-        print("PAINEL_ATUALIZADO: a aba aberta recarrega sozinha em poucos segundos (file://" + index + ")")
+        print("PAINEL_ATUALIZADO: a aba aberta recarrega sozinha em poucos segundos (" + (URL if no_ar else "file://" + index) + ")")
     else:
         print("PAINEL_ABERTO: " + abrir(index))
         with open(marca, "w") as f:

@@ -6,3 +6,4 @@ __pycache__/
 .venv/
 painel/dados.js
 painel/.aberto
+painel/.servidor.log
