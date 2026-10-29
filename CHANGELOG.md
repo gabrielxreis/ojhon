@@ -6,7 +6,8 @@ Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` segu
 - **ID do Jhon:** mesma família visual do Gab (fundo quase preto, cor neon, Inter Tight 800), com o azul elétrico como assinatura e um símbolo de barras subindo com seta. Arquivos em `assets/id/` e banner novo.
 - **Painel com tema escuro:** segue o tema do sistema e tem o botão de sol e lua no topo (a escolha fica salva).
 - **Menu do painel reorganizado:** Painel (com contadores), Canais (com ou sem dados) e Pedir ao Jhon (copia o comando já com o cliente). Completo em tela grande, só ícones em tela média, gaveta no celular, e dá para recolher.
-- **Preço da X-Trader corrigido** pelo site (X-ACCESS Genesis R$ 997 por ano).
+- **Painel com mais áreas:** Plano de verba (calculadora de verba por semana, retorno e ponto de empate), Testes de criativo e Concorrentes.
+- **README novo:** conectores, painel, ID e o fluxo completo.
 
 ## 2026.10.29-2 (29/10/2026)
 - **Painel do Jhon no navegador:** todo insight ou resultado abre um painel local (`/ojhon painel <cliente>`): barra lateral com as plataformas, seletor de cliente, busca ⌘K, Exportar CSV, abas Visão geral, Campanhas, Criativos e Parecer; resumo com variação contra o mês anterior, mapa de entrega, evolução por mês, investimento por tipo, parecer do Jhon e tabela de campanhas.

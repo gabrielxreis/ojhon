@@ -238,6 +238,33 @@ section[hidden]{display:none!important}
 :root[data-theme="dark"] .tema .sol{display:block} :root[data-theme="dark"] .tema .lua{display:none}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tema .sol{display:block} :root:not([data-theme="light"]) .tema .lua{display:none}}
 .who:hover{background:var(--hover)}
+.calc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.campo{display:grid;gap:6px;font-size:13px;color:var(--fg-2)}
+.campo>span{font-weight:500;color:var(--fg)}
+.campo small{color:var(--muted);font-size:12px}
+.inp{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:0 12px;height:42px;background:var(--card)}
+.inp:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft)}
+.inp input{border:0;outline:0;background:none;font:inherit;font-size:15px;font-weight:600;color:var(--fg);width:100%;min-width:0}
+.inp em{font-style:normal;color:var(--muted);font-size:13px}
+.res{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:18px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.res div{padding:14px;display:grid;gap:4px;border-left:1px solid var(--line)}
+.res div:first-child{border-left:0}
+.res div:nth-child(n+4){border-top:1px solid var(--line)}
+.res div:nth-child(4){border-left:0}
+.res span{font-size:12.5px;color:var(--fg-2)}
+.res b{font-size:22px;font-weight:600;letter-spacing:-.01em}
+.res b.ok{color:var(--ok)} .res b.bad{color:var(--bad)} .res b.warn{color:var(--warn)}
+.res small{font-size:11.5px;color:var(--muted)}
+.testes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:14px;margin-top:14px}
+.teste{border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;align-content:start}
+.teste-top{display:flex;align-items:center;gap:8px}
+.teste-top b{font-weight:600}
+.teste-top .pill{margin-left:auto}
+.teste q{color:var(--fg);line-height:1.45;font-size:14px;quotes:"“" "”"}
+.teste small{color:var(--muted);font-size:12px}
+.vazio{border:1px dashed var(--line);border-radius:12px;padding:28px;text-align:center;display:grid;gap:10px;justify-items:center;color:var(--fg-2)}
+.vazio code{font-family:ui-monospace,Menlo,monospace;background:var(--soft);border:1px solid var(--line);padding:6px 10px;border-radius:8px;color:var(--fg)}
+@media (max-width:767px){.calc,.res{grid-template-columns:1fr}.res div{border-left:0;border-top:1px solid var(--line)}.res div:first-child{border-top:0}}
 </style>
 </head>
 <body>
@@ -254,6 +281,9 @@ section[hidden]{display:none!important}
         <button class="nav-item" data-goto="campanhas" data-tip="Campanhas"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10v4a1 1 0 0 0 1 1h2l5 4V5L6 9H4a1 1 0 0 0-1 1zM15 9a3 3 0 0 1 0 6M18 6a7 7 0 0 1 0 12"/></svg><span class="lbl">Campanhas</span><span class="badge-n" id="n-camp"></span></button>
         <button class="nav-item" data-goto="criativos" data-tip="Criativos"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m10 9 5 3-5 3z"/></svg><span class="lbl">Criativos</span></button>
         <button class="nav-item" data-goto="parecer" data-tip="Parecer do Jhon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span class="lbl">Parecer do Jhon</span><span class="badge-n warn" id="n-lac" title="Perguntas para você"></span><i class="dot-n" id="dot-lac"></i></button>
+        <button class="nav-item" data-goto="verba" data-tip="Plano de verba"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h8"/></svg><span class="lbl">Plano de verba</span></button>
+        <button class="nav-item" data-goto="testes" data-tip="Testes de criativo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6M10 3v6L5 18a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3L14 9V3"/><path d="M7.5 15h9"/></svg><span class="lbl">Testes</span><span class="badge-n" id="n-test"></span></button>
+        <button class="nav-item" data-goto="concorrentes" data-tip="Concorrentes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9.5" r="2.5"/><path d="M3 20c.5-3.5 3-5.5 6-5.5s5.5 2 6 5.5M15.5 14.6c2.6.2 4.3 2 4.8 5"/></svg><span class="lbl">Concorrentes</span></button>
       </nav>
     </div>
     <div class="grp">
@@ -293,6 +323,9 @@ section[hidden]{display:none!important}
           <button class="tab" data-tab="campanhas" role="tab">Campanhas</button>
           <button class="tab" data-tab="criativos" role="tab">Criativos</button>
           <button class="tab" data-tab="parecer" role="tab">Parecer</button>
+          <button class="tab" data-tab="verba" role="tab">Verba</button>
+          <button class="tab" data-tab="testes" role="tab">Testes</button>
+          <button class="tab" data-tab="concorrentes" role="tab">Concorrentes</button>
         </div>
         <div class="right">
           <div class="select"><select id="periodo" aria-label="Período"></select></div>
@@ -360,6 +393,43 @@ section[hidden]{display:none!important}
             </tr></thead>
             <tbody id="tbody"></tbody>
           </table></div>
+        </article></div>
+      </section>
+
+      <section data-sec="verba" data-so="1">
+        <div class="grid row-b">
+          <article class="card">
+            <h2>Plano de verba</h2>
+            <p class="sub">Quanto investir por semana para bater a meta de vendas. Mude os campos e o resto se recalcula.</p>
+            <div class="calc">
+              <label class="campo"><span>Preço do produto</span><div class="inp"><em>R$</em><input id="c-preco" type="number" min="0" step="1"></div><small id="c-preco-n"></small></label>
+              <label class="campo"><span>Custo por venda alvo</span><div class="inp"><em>R$</em><input id="c-cpa" type="number" min="1" step="1"></div><small>Hoje a conta está em <b id="c-cpa-hoje">—</b></small></label>
+              <label class="campo"><span>Vendas por semana</span><div class="inp"><input id="c-vendas" type="number" min="1" step="1"><em>vendas</em></div><small>Meta que faz valer o investimento</small></label>
+              <label class="campo"><span>Taxa e imposto</span><div class="inp"><input id="c-taxa" type="number" min="0" max="90" step="0.5"><em>%</em></div><small>Hotmart, imposto, reembolso</small></label>
+            </div>
+            <div class="res" id="c-res"></div>
+          </article>
+          <article class="card">
+            <h2>Cenários</h2>
+            <p class="sub">Verba por semana para cada custo por venda, na meta de vendas escolhida.</p>
+            <div class="dist" id="c-cen"></div>
+          </article>
+        </div>
+      </section>
+
+      <section data-sec="testes" data-so="1">
+        <div class="grid"><article class="card">
+          <h2>Testes de criativo</h2>
+          <p class="sub" id="t-regra"></p>
+          <div class="testes" id="testes"></div>
+        </article></div>
+      </section>
+
+      <section data-sec="concorrentes" data-so="1">
+        <div class="grid"><article class="card">
+          <h2>Concorrentes</h2>
+          <p class="sub">Anúncios ativos da concorrência na Biblioteca de Anúncios do Meta (Brasil).</p>
+          <div class="testes" id="concorrentes"></div>
         </article></div>
       </section>
 
@@ -531,8 +601,78 @@ function render() {
   $('#geo-n').textContent = g.nota || '';
   drawMap(g.pontos || []);
 
+  // plano de verba
+  const of = d.oferta || {};
+  const vcpa = (d.resumo && d.resumo.kpis || []).find((k) => /venda/i.test(k.rotulo));
+  $('#c-preco').value = of.preco || '';
+  $('#c-preco-n').textContent = of.produto ? of.produto + (of.fonte ? ' (' + of.fonte + ')' : '') : 'Preço do produto';
+  $('#c-cpa').value = of.cpa_alvo || (vcpa ? Math.round(vcpa.valor) : '');
+  $('#c-vendas').value = of.vendas_semana || 10;
+  $('#c-taxa').value = of.taxa_pct || 0;
+  $('#c-cpa-hoje').textContent = vcpa ? fmt(vcpa.valor, 'brl0') : '—';
+  calcular();
+
+  // testes
+  $('#n-test').textContent = (d.testes || []).length || '';
+  $('#t-regra').textContent = d.testes_regra || 'Criativos em teste.';
+  const te = $('#testes'); te.replaceChildren();
+  (d.testes || []).forEach((t) => {
+    const c = el('div', 'teste');
+    const top = el('div', 'teste-top'); const st = el('span', 'pill', t.status); st.dataset.p = /aprova|rodando|vencedor/i.test(t.status) && !/esperando/i.test(t.status) ? 'bom' : 'atenção';
+    top.append(el('b', null, t.nome), st);
+    c.append(top, el('q', null, t.gancho), el('small', null, t.angulo + ' · ' + t.duracao));
+    te.append(c);
+  });
+  if (!(d.testes || []).length) te.append(vazio('Nenhum teste de criativo ainda.', '/ojhon criativo ' + atual));
+
+  // concorrentes
+  const co = $('#concorrentes'); co.replaceChildren();
+  (d.concorrentes || []).forEach((a) => {
+    const c = el('div', 'teste');
+    const top = el('div', 'teste-top'); top.append(el('b', null, a.anunciante || '—'));
+    if (a.desde) top.append(el('span', 'pill', 'desde ' + a.desde));
+    c.append(top, el('q', null, a.texto || ''), el('small', null, [a.cta, a.destino, a.criativos ? a.criativos + ' anúncios no mesmo criativo' : ''].filter(Boolean).join(' · ')));
+    co.append(c);
+  });
+  if (!(d.concorrentes || []).length) co.append(vazio('Ainda sem leitura de concorrentes. Peça ao Jhon e ele puxa os anúncios ativos deles.', '/ojhon concorrente ' + atual));
+
   drawTable();
   $('#fonte').replaceChildren(el('span', null, 'Fonte: ' + (d.fonte || '—') + '. Atualizado em ' + (d.atualizado ? d.atualizado.split('-').reverse().join('/') : '—') + '.'), el('span', null, 'Gerado pelo Jhon (/ojhon). Conta: ' + (c.conta || '—') + (c.conta_id ? ' (' + c.conta_id + ')' : '') + '.'));
+}
+
+function vazio(txt, cmd) {
+  const v = el('div', 'vazio'); v.append(el('span', null, txt));
+  const b = el('button', 'btn'); b.append(el('code', null, cmd));
+  b.addEventListener('click', () => { const fim = () => { b.lastChild.textContent = 'copiado: cole no Claude'; setTimeout(() => (b.lastChild.textContent = cmd), 1800); }; navigator.clipboard ? navigator.clipboard.writeText(cmd).then(fim, fim) : fim(); });
+  v.append(b); return v;
+}
+
+function calcular() {
+  const preco = +$('#c-preco').value || 0, cpa = +$('#c-cpa').value || 0, vendas = +$('#c-vendas').value || 0, taxa = (+$('#c-taxa').value || 0) / 100;
+  const liquido = preco * (1 - taxa);
+  const semana = cpa * vendas, mes = semana * 52 / 12;
+  const receita = liquido * vendas, lucro = receita - semana, ret = cpa ? liquido / cpa : 0;
+  const tom = ret >= 3 ? 'ok' : ret >= 1.5 ? 'warn' : 'bad';
+  const cel = (rot, val, nota, cls) => { const x = el('div'); const b = el('b', cls || null, val); x.append(el('span', null, rot), b, el('small', null, nota)); return x; };
+  $('#c-res').replaceChildren(
+    cel('Verba por semana', fmt(semana, 'brl0'), vendas + ' vendas × ' + fmt(cpa, 'brl0')),
+    cel('Verba por mês', fmt(mes, 'brl0'), 'média de 4,33 semanas'),
+    cel('Retorno por venda', ret ? ret.toLocaleString('pt-BR', {maximumFractionDigits: 1}) + 'x' : '—', 'meta saudável: 3x ou mais', tom),
+    cel('Receita líquida na semana', fmt(receita, 'brl0'), taxa ? 'depois de ' + F.pct.format(taxa) + ' de taxa' : 'sem taxa informada'),
+    cel('Sobra na semana', fmt(lucro, 'brl0'), 'receita líquida menos verba', lucro >= 0 ? 'ok' : 'bad'),
+    cel('Empata com venda a', fmt(liquido, 'brl0'), 'acima disso, cada venda dá prejuízo')
+  );
+  const cen = $('#c-cen'); cen.replaceChildren();
+  const vcpa = (DADOS[atual] && DADOS[atual].resumo && DADOS[atual].resumo.kpis || []).find((k) => /venda/i.test(k.rotulo));
+  const lista = [...new Set([Math.round(liquido / 3), cpa, Math.round(liquido / 2), vcpa ? Math.round(vcpa.valor) : null].filter((x) => x > 0))].sort((a, b) => a - b);
+  const mx = d3.max(lista) * vendas || 1;
+  lista.forEach((c) => {
+    const r = liquido / c, row = el('div', 'dist-row');
+    const top = el('div', 'dist-top'); top.append(el('b', null, 'Venda a ' + fmt(c, 'brl0') + (vcpa && c === Math.round(vcpa.valor) ? ' (hoje)' : c === cpa ? ' (alvo)' : '')), el('span', null, fmt(c * vendas, 'brl0') + ' por semana'));
+    const tr = el('div', 'track'); const sp = el('span'); sp.style.width = (c * vendas / mx * 100) + '%'; sp.style.background = r >= 3 ? 'var(--ok)' : r >= 1.5 ? 'var(--warn)' : 'var(--bad)'; tr.append(sp);
+    row.append(top, tr, el('small', null, 'retorno de ' + r.toLocaleString('pt-BR', {maximumFractionDigits: 1}) + 'x por venda'));
+    cen.append(row);
+  });
 }
 
 function drawChart(se) {
@@ -543,7 +683,7 @@ function drawChart(se) {
   const lg = $('#legend'); lg.replaceChildren();
   linhas.forEach((l, i) => { const s = el('span'); const dot = el('i'); dot.style.background = cores[i]; s.append(dot, document.createTextNode(l.rotulo)); lg.append(s); });
   if (!pts.length) { box.append(el('p', 'empty', 'Sem série por mês nesta leitura.')); return; }
-  const W = box.clientWidth || 700, H = box.clientHeight || 300, m = {t: 10, r: 14, b: 26, l: 44};
+  const W = Math.max(box.clientWidth, 320), H = Math.max(box.clientHeight, 220), m = {t: 10, r: 14, b: 26, l: 44};
   const x = d3.scalePoint(pts.map((p) => p.mes), [m.l, W - m.r]).padding(0.15);
   const ymax = d3.max(pts, (p) => d3.max(linhas, (l) => p[l.campo])) || 1;
   const y = d3.scaleLinear([0, ymax], [H - m.b, m.t]).nice(5);
@@ -653,7 +793,7 @@ function drawTable() {
 // abas
 const mostrar = (tab) => {
   document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.tab === tab));
-  document.querySelectorAll('section[data-sec]').forEach((s) => { s.hidden = !(tab === 'geral' || s.dataset.sec === tab); });
+  document.querySelectorAll('section[data-sec]').forEach((s) => { s.hidden = !(s.dataset.sec === tab || (tab === 'geral' && !s.dataset.so)); });
   document.querySelectorAll('.side .nav-item[data-goto]').forEach((n) => n.classList.toggle('active', n.dataset.goto === tab));
   app.classList.remove('aberto');
   if (tab === 'geral') { const d = DADOS[atual]; if (d) { drawChart(d.serie || {}); drawMap((d.geo || {}).pontos || []); } }
@@ -688,6 +828,8 @@ $('#tema').addEventListener('click', () => {
   raiz.dataset.theme = escuro ? 'light' : 'dark';
   try { localStorage.setItem('jhon-tema', raiz.dataset.theme); } catch (e) {}
 });
+
+['#c-preco', '#c-cpa', '#c-vendas', '#c-taxa'].forEach((id) => $(id).addEventListener('input', calcular));
 
 // tabela: ordenar
 document.querySelectorAll('th[data-k]').forEach((th) => th.addEventListener('click', () => {
