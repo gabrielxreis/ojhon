@@ -42,6 +42,8 @@
 O Jhon se atualiza sozinho toda vez que você usa e **mostra o que mudou** logo no começo da conversa. Histórico completo em [`CHANGELOG.md`](CHANGELOG.md). Últimas:
 
 - **Nasce o Jhon:** auditoria de 12 plataformas, plano de mídia, criativo, concorrentes, rastreamento, landing page, testes, relatório, SEO e visibilidade em IA.
+- **Painel no navegador:** todo resultado abre um painel local com resumo, evolução, mapa, investimento por tipo, parecer e campanhas (`painel/`).
+- **Meta Ads direto da conta:** conecte o MCP oficial `https://mcp.facebook.com/ads` e o Jhon lê a conta sem export.
 - **Dois motores, um gestor:** o [claude-ads](https://github.com/AgriciDaniel/claude-ads) (33 sub-skills e 25 agentes de auditoria) e 49 playbooks do [marketing-skills](https://github.com/irinabuht12-oss/marketing-skills); o Jhon escolhe qual usar em cada pedido.
 - **Ponte com o Gab:** brief do anúncio, edição no /ogab e auditoria do criativo antes de subir.
 

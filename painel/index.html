@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jhon · Painel de tráfego</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: barra lateral fixa + área de conteúdo com cabeçalho, abas e grade de cartões (mesma arquitetura da referência Sociolyze). */
+:root{
+  --bg:#EEF1F7; --panel:#FFFFFF; --side:#FFFFFF; --line:#E4E7EE; --line-2:#EEF0F5;
+  --fg:#101828; --fg-2:#475467; --muted:#667085; --faint:#98A2B3;
+  --blue:#1E5EFF; --blue-2:#5B8CFF; --blue-3:#A9C1FF; --blue-soft:#EAF0FF; --navy:#1B2B8F; --violet:#5B2EE5;
+  --orange:#FF9A2F; --ok:#12B76A; --bad:#F04438; --warn:#F79009;
+  --grid:#EEF0F5; --dot:#D5DAE3;
+  --r:14px; --r-sm:10px;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --shadow:0 1px 2px rgba(16,24,40,.04);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit}
+a{color:inherit}
+.app{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:100vh;gap:0}
+
+/* barra lateral */
+.side{background:var(--side);border-right:1px solid var(--line);padding:24px 16px;display:flex;flex-direction:column;gap:22px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;padding:0 8px;font-weight:700;font-size:19px;letter-spacing:-.01em}
+.brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(140deg,#3E7BFF,#1E3FD8);display:grid;place-items:center;color:#fff;font-size:16px;font-weight:700;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12)}
+.side h6{margin:0 0 8px;padding:0 8px;font-size:11px;letter-spacing:.08em;font-weight:700;color:var(--fg)}
+.nav{display:grid;gap:4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:0;background:none;cursor:pointer;color:var(--fg-2);font-size:14px;text-align:left;width:100%}
+.nav-item:hover{background:#F5F7FB}
+.nav-item.active{background:var(--blue);color:#fff;font-weight:500}
+.nav-item .chev{margin-left:auto;opacity:.8}
+.subnav{border:1px solid var(--line);border-radius:12px;margin-top:6px;padding:6px;display:grid;gap:2px}
+.subnav .nav-item{padding:8px 10px;font-size:13px}
+.subnav .nav-item.on{color:var(--blue);font-weight:500}
+.subnav .nav-item.off{color:var(--faint);cursor:default}
+.subnav .nav-item.off:hover{background:none}
+.pico{width:14px;height:14px;border-radius:4px;display:inline-grid;place-items:center;font-size:9px;font-weight:700;color:#fff;flex:none}
+.side-card{margin-top:auto;border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:10px}
+.side-card-top{display:flex;gap:10px;align-items:flex-start}
+.side-card-ic{width:30px;height:30px;border-radius:8px;background:var(--blue);color:#fff;display:grid;place-items:center;flex:none}
+.side-card b{font-weight:600;font-size:13px;display:block}
+.side-card small{color:var(--muted);font-size:12px}
+.bar{height:6px;border-radius:99px;background:var(--line-2);overflow:hidden}
+.bar>span{display:block;height:100%;background:var(--blue);border-radius:99px}
+.side-card .step{font-size:12px;color:var(--blue);font-weight:600}
+
+/* conteúdo */
+.main{padding:18px 20px 40px;min-width:0}
+.frame{background:var(--panel);border:1px solid var(--line);border-radius:18px;min-height:calc(100vh - 36px)}
+.top{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.who{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:6px 10px 6px 6px;background:#fff;cursor:pointer;position:relative;min-width:0}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(140deg,#1B1530,#3B2A6B);color:#E9D9A6;display:grid;place-items:center;font-weight:700;font-size:12px;position:relative;flex:none}
+.avatar .badge{position:absolute;right:-3px;bottom:-3px;width:15px;height:15px;border-radius:50%;background:#1877F2;border:2px solid #fff;color:#fff;font-size:8px;display:grid;place-items:center;font-weight:700}
+.who-name{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+.menu{position:absolute;top:calc(100% + 6px);left:0;min-width:240px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(16,24,40,.12);padding:6px;z-index:20}
+.menu button{display:flex;gap:10px;align-items:center;width:100%;border:0;background:none;padding:8px;border-radius:8px;cursor:pointer;text-align:left}
+.menu button:hover{background:#F5F7FB}
+.search{margin-left:auto;display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:0 10px;height:44px;min-width:min(290px,100%);background:#fff}
+.search input{border:0;outline:0;font:inherit;flex:1;min-width:0;background:none}
+.kbd{font-size:12px;color:var(--fg-2);border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:#F9FAFB;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:500}
+.btn-primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn-primary:hover{filter:brightness(1.06)}
+.btn:focus-visible,.nav-item:focus-visible,.tab:focus-visible,.who:focus-visible{outline:2px solid var(--blue-2);outline-offset:2px}
+
+.bar2{display:flex;align-items:center;gap:10px;padding:16px;flex-wrap:wrap}
+.tabs{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:12px;background:#F7F8FB}
+.tab{border:0;background:none;padding:8px 14px;border-radius:9px;cursor:pointer;color:var(--fg-2)}
+.tab.active{background:var(--blue);color:#fff;font-weight:500}
+.bar2 .right{margin-left:auto;display:flex;gap:10px}
+.select{position:relative}
+.select select{appearance:none;height:44px;border:1px solid var(--line);border-radius:12px;padding:0 36px 0 14px;font:inherit;background:#fff;cursor:pointer}
+.select::after{content:"";position:absolute;right:14px;top:18px;width:7px;height:7px;border-right:1.6px solid var(--fg-2);border-bottom:1.6px solid var(--fg-2);transform:rotate(45deg);pointer-events:none}
+
+.grid{display:grid;gap:16px;padding:0 16px 16px}
+.row-a{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.row-b{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}
+.card{border:1px solid var(--line);border-radius:var(--r);padding:20px;background:#fff;min-width:0;display:flex;flex-direction:column;gap:4px}
+.card h2{margin:0;font-size:19px;font-weight:600;letter-spacing:-.01em}
+.card .sub{margin:2px 0 0;color:var(--fg-2);font-size:13px}
+.card-head{display:flex;align-items:flex-start;gap:12px}
+.card-head .select{margin-left:auto}
+
+/* resumo 2x2 */
+.kpis{display:grid;grid-template-columns:1fr 1fr;margin-top:14px}
+.kpi{padding:12px 14px;display:grid;gap:4px;border-left:1px solid var(--line)}
+.kpi:nth-child(2n){border-left:1px solid var(--line)}
+.kpi:nth-child(-n+2){border-bottom:0}
+.kpi-top{display:flex;align-items:center;gap:8px}
+.kpi-top span{font-weight:500}
+.delta{margin-left:auto;font-size:12.5px;font-weight:500;display:inline-flex;gap:3px;align-items:center;white-space:nowrap}
+.delta.up{color:var(--ok)} .delta.down{color:var(--bad)} .delta.flat{color:var(--muted)}
+.kpi-val{font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1.15;margin-top:4px}
+.kpi small{color:var(--muted);font-size:12px}
+
+/* mapa */
+.map{position:relative;height:250px;margin-top:auto;padding-top:10px;overflow:hidden}
+.map svg{width:100%;height:100%;display:block}
+.pin{position:absolute;transform:translate(-50%,-100%);background:var(--blue);color:#fff;border-radius:6px;padding:5px 8px 6px;font-size:11px;line-height:1.25;white-space:nowrap;box-shadow:0 4px 10px rgba(30,94,255,.25)}
+.pin b{display:block;font-size:13px;font-weight:600}
+.pin::after{content:"";position:absolute;left:50%;bottom:-5px;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--blue);border-bottom:0}
+.map-note{color:var(--muted);font-size:12px;margin:6px 0 0}
+
+/* gráfico */
+.legend{display:flex;gap:18px;margin:12px 0 4px;font-size:13px;color:var(--fg-2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.chart{position:relative;height:300px}
+.chart svg{width:100%;height:100%;display:block;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(16,24,40,.12);padding:10px 12px;font-size:12.5px;min-width:180px;display:grid;gap:6px;z-index:5}
+.tip-h{color:var(--fg);font-weight:500}
+.tip-r{display:flex;align-items:center;gap:8px;color:var(--fg-2)}
+.tip-r b{margin-left:auto;color:var(--fg);font-weight:600}
+.tip-r i{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+/* barras por tipo */
+.dist{display:grid;gap:18px;margin-top:16px;border-top:1px solid var(--line);padding-top:16px}
+.dist-row{display:grid;gap:6px}
+.dist-top{display:flex;align-items:baseline;gap:8px}
+.dist-top b{font-weight:500;font-size:14px}
+.dist-top span{margin-left:auto;color:var(--fg-2);font-size:13px}
+.dist small{color:var(--muted);font-size:12px}
+.track{height:8px;border-radius:99px;background:var(--line-2);overflow:hidden}
+.track>span{display:block;height:100%;border-radius:99px}
+
+/* parecer */
+.parecer{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:14px}
+.pcol{border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start;position:relative}
+.pcol h3{margin:0;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.pcol h3 i{width:8px;height:8px;border-radius:50%}
+.pcol ul,.pcol ol{margin:0;padding-left:18px;display:grid;gap:8px;color:var(--fg-2);line-height:1.45;font-size:13px}
+.pcol[data-k=bom] h3 i{background:var(--ok)} .pcol[data-k=ruim] h3 i{background:var(--bad)}
+.pcol[data-k=fazer] h3 i{background:var(--blue)} .pcol[data-k=lacunas] h3 i{background:var(--faint)}
+.pcol .foot{font-size:12px;color:var(--muted)}
+.manchete{margin:14px 16px 16px;padding:14px 16px;border-radius:12px;background:var(--blue-soft);color:var(--navy);display:flex;gap:12px;align-items:flex-start;line-height:1.5}
+.manchete b{font-weight:600}
+.manchete .ic{width:28px;height:28px;border-radius:8px;background:var(--blue);color:#fff;display:grid;place-items:center;flex:none;font-weight:700;font-size:13px}
+
+/* tabela */
+.twrap{overflow:auto;margin-top:12px;max-height:520px;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{position:sticky;top:0;background:#F9FAFB;text-align:left;font-weight:500;color:var(--fg-2);padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;user-select:none}
+th.num,td.num{text-align:right}
+td{padding:11px 12px;border-bottom:1px solid var(--line-2);vertical-align:top}
+td.name{min-width:240px;font-weight:500}
+td.why{min-width:260px;color:var(--muted)}
+th[aria-sort=descending]::after{content:" ↓"} th[aria-sort=ascending]::after{content:" ↑"}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:500;white-space:nowrap}
+.pill[data-p=bom]{background:#E7F8EF;color:#067647}
+.pill[data-p=atenção]{background:#FFF4E5;color:#B54708}
+.pill[data-p=ruim]{background:#FEECEB;color:#B42318}
+.foot-note{padding:0 16px 20px;color:var(--muted);font-size:12px;display:grid;gap:4px}
+.empty{color:var(--muted);font-size:13px;padding:30px 0;text-align:center}
+section[hidden]{display:none!important}
+
+@media (max-width:1180px){.parecer{grid-template-columns:1fr 1fr}}
+@media (max-width:1020px){.app{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center}.side .grp,.side-card{display:none}.row-a,.row-b{grid-template-columns:1fr}}
+@media (max-width:640px){.main{padding:8px}.parecer,.kpis{grid-template-columns:1fr}.kpi{border-left:0;border-top:1px solid var(--line)}.search{order:3;margin-left:0;flex:1 1 100%}.bar2 .right{margin-left:0}}
+@media (prefers-reduced-motion:no-preference){.track>span{animation:grow .7s cubic-bezier(.2,.8,.2,1) both;transform-origin:left}@keyframes grow{from{transform:scaleX(0)}}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="brand-mark">J</span>Jhon</div>
+    <div class="grp">
+      <h6>GERAL</h6>
+      <div class="nav">
+        <button class="nav-item active" data-goto="geral"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10.6 3.4a2 2 0 0 1 2.8 0l7 6.6c.4.4.6.9.6 1.4V19a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-7.6c0-.5.2-1 .6-1.4z"/></svg>Início<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></button>
+        <div class="subnav" id="plataformas"></div>
+        <button class="nav-item" data-goto="campanhas"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 16v-5M12 16V8M16 16v-3"/></svg>Análise<svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button>
+      </div>
+    </div>
+    <div class="grp">
+      <h6>OUTROS</h6>
+      <div class="nav">
+        <button class="nav-item" data-goto="parecer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H8l-4 4z"/></svg>Parecer do Jhon</button>
+        <button class="nav-item" data-copy="/ojhon ajuda"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01"/></svg>Ajuda</button>
+        <button class="nav-item" data-copy="/ojhon "><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 21V4h11l-1 4 1 4H5"/></svg>Pedir ao Jhon</button>
+      </div>
+    </div>
+    <div class="side-card">
+      <div class="side-card-top"><span class="side-card-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></span><div><b id="perfil-rot">Perfil de tráfego</b><small>Quanto mais completo, melhor o parecer</small></div></div>
+      <div class="bar"><span id="perfil-bar" style="width:0"></span></div>
+      <span class="step" id="perfil-txt"></span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="frame">
+      <div class="top">
+        <div class="who" id="who" tabindex="0" role="button" aria-haspopup="listbox">
+          <span class="avatar" id="av"><span id="av-ini"></span><span class="badge">f</span></span>
+          <span class="who-name" id="who-name"></span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          <div class="menu" id="menu" hidden></div>
+        </div>
+        <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Buscar campanha..." autocomplete="off"><span class="kbd">⌘ + K</span></label>
+        <button class="btn btn-primary" id="exportar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>Exportar</button>
+      </div>
+
+      <div class="bar2">
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="geral" role="tab">Visão geral</button>
+          <button class="tab" data-tab="campanhas" role="tab">Campanhas</button>
+          <button class="tab" data-tab="criativos" role="tab">Criativos</button>
+          <button class="tab" data-tab="parecer" role="tab">Parecer</button>
+        </div>
+        <div class="right">
+          <div class="select"><select id="periodo" aria-label="Período"></select></div>
+          <div class="select"><select id="filtro" aria-label="Filtrar por tipo"><option value="">Filtro: todos os tipos</option></select></div>
+        </div>
+      </div>
+
+      <div class="manchete" id="manchete-box"><span class="ic">J</span><div id="manchete"></div></div>
+
+      <section data-sec="geral">
+        <div class="grid row-a">
+          <article class="card">
+            <h2 id="res-t">Resumo de desempenho</h2>
+            <p class="sub" id="res-s"></p>
+            <div class="kpis" id="kpis"></div>
+          </article>
+          <article class="card">
+            <h2 id="geo-t">Onde a verba foi entregue</h2>
+            <p class="sub" id="geo-s"></p>
+            <div class="map" id="map"></div>
+            <p class="map-note" id="geo-n"></p>
+          </article>
+        </div>
+        <div class="grid row-b">
+          <article class="card">
+            <div class="card-head"><div><h2 id="ser-t">Evolução da conta</h2><p class="sub" id="ser-s"></p></div><div class="select"><select id="ano" aria-label="Ano"></select></div></div>
+            <div class="legend" id="legend"></div>
+            <div class="chart" id="chart"></div>
+            <p class="map-note" id="ser-n"></p>
+          </article>
+          <article class="card">
+            <h2 id="dist-t">Investimento por tipo</h2>
+            <p class="sub" id="dist-s"></p>
+            <div class="dist" id="dist"></div>
+          </article>
+        </div>
+      </section>
+
+      <section data-sec="parecer">
+        <div class="grid"><article class="card">
+          <h2>Parecer do Jhon</h2>
+          <p class="sub">O que a leitura da conta mostrou e o que fazer primeiro. Nada muda na conta sem o seu "pode".</p>
+          <div class="parecer" id="parecer"></div>
+        </article></div>
+      </section>
+
+      <section data-sec="criativos">
+        <div class="grid"><article class="card">
+          <h2>Custo por resultado dos criativos</h2>
+          <p class="sub">Campanhas de visita ao perfil, da mais barata para a mais cara. A cor é o parecer do Jhon.</p>
+          <div class="dist" id="criativos"></div>
+        </article></div>
+      </section>
+
+      <section data-sec="campanhas">
+        <div class="grid"><article class="card">
+          <h2>Campanhas</h2>
+          <p class="sub" id="camp-s">Clique no título de uma coluna para ordenar.</p>
+          <div class="twrap"><table>
+            <thead><tr>
+              <th data-k="campanha">Campanha</th><th data-k="grupo">Tipo</th><th data-k="quando">Quando</th>
+              <th class="num" data-k="gasto" aria-sort="descending">Investimento</th><th class="num" data-k="resultados">Resultados</th>
+              <th data-k="resultado_tipo">Resultado</th><th class="num" data-k="custo_por_resultado">Custo por resultado</th>
+              <th class="num" data-k="cpm">CPM</th><th data-k="parecer">Parecer</th><th data-k="porque">Por quê</th>
+            </tr></thead>
+            <tbody id="tbody"></tbody>
+          </table></div>
+        </article></div>
+      </section>
+
+      <div class="foot-note" id="fonte"></div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="dados.js"></script>
+<script>
+(() => {
+const DADOS = window.JHON_DADOS || {};
+const ids = Object.keys(DADOS);
+let atual = window.JHON_ATUAL && DADOS[window.JHON_ATUAL] ? window.JHON_ATUAL : ids[0];
+const $ = (s) => document.querySelector(s);
+const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+
+const F = {
+  brl: new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}),
+  brl0: new Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL', maximumFractionDigits: 0}),
+  num: new Intl.NumberFormat('pt-BR'),
+  pct: new Intl.NumberFormat('pt-BR', {style: 'percent', maximumFractionDigits: 1}),
+  pct0: new Intl.NumberFormat('pt-BR', {style: 'percent', maximumFractionDigits: 0}),
+  comp: new Intl.NumberFormat('pt-BR', {notation: 'compact', maximumFractionDigits: 1})
+};
+const fmt = (v, f) => v == null ? '—' : f === 'brl' ? F.brl.format(v) : f === 'brl0' ? F.brl0.format(v) : f === 'pct' ? F.pct.format(v) : f === 'comp' ? F.comp.format(v) : F.num.format(v);
+const MES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+const mesNome = (m) => { const [y, mm] = m.split('-'); return MES[+mm - 1] + ' de ' + y; };
+const mesCurto = (m) => { const s = MES[+m.split('-')[1] - 1]; return s[0].toUpperCase() + s.slice(1); };
+
+let sortKey = 'gasto', sortDir = -1, busca = '', filtroTipo = '';
+
+function render() {
+  const d = DADOS[atual];
+  if (!d) { document.body.innerHTML = '<p style="padding:40px;font-family:sans-serif">Sem dados. Rode: python3 ~/.claude/skills/ojhon/painel/painel.py --cliente &lt;nome&gt;</p>'; return; }
+  const c = d.cliente || {};
+  document.title = 'Jhon · ' + (c.nome || atual);
+  $('#av-ini').textContent = c.iniciais || (c.nome || '?').slice(0, 2).toUpperCase();
+  $('#who-name').textContent = c.nome || atual;
+  $('#manchete').textContent = d.manchete || '';
+  $('#manchete-box').hidden = !d.manchete;
+
+  // plataformas
+  const pl = $('#plataformas'); pl.replaceChildren();
+  const cor = {'Meta Ads': '#1877F2', 'Google Ads': '#34A853', 'TikTok Ads': '#111', 'YouTube': '#FF0000', 'LinkedIn': '#0A66C2'};
+  (d.plataformas || []).forEach((p) => {
+    const b = el('button', 'nav-item ' + (p.ativo ? 'on' : 'off'));
+    const ic = el('span', 'pico', p.nome[0]); ic.style.background = p.ativo ? (cor[p.nome] || 'var(--blue)') : '#D0D5DD';
+    b.append(ic, document.createTextNode(p.nome + (p.ativo ? '' : ' · sem conta')));
+    pl.append(b);
+  });
+
+  // perfil
+  const pf = d.perfil || {preenchidos: 0, total: 1};
+  $('#perfil-rot').textContent = pf.rotulo || 'Perfil de tráfego';
+  $('#perfil-bar').style.width = (pf.preenchidos / pf.total * 100) + '%';
+  $('#perfil-txt').textContent = pf.preenchidos + ' de ' + pf.total + ' campos preenchidos';
+
+  // período e filtros
+  const per = $('#periodo'); per.replaceChildren(new Option((d.periodo && d.periodo.rotulo) || 'Período', ''));
+  const tipos = [...new Set((d.campanhas || []).map((r) => r.grupo))];
+  const fil = $('#filtro'); fil.replaceChildren(new Option('Filtro: todos os tipos', ''), ...tipos.map((t) => new Option(t, t)));
+  fil.value = filtroTipo;
+
+  // resumo
+  const rs = d.resumo || {};
+  $('#res-t').textContent = rs.titulo || 'Resumo de desempenho';
+  $('#res-s').textContent = rs.subtitulo || '';
+  const kp = $('#kpis'); kp.replaceChildren();
+  (rs.kpis || []).forEach((k) => {
+    const box = el('div', 'kpi');
+    const top = el('div', 'kpi-top'); top.append(el('span', null, k.rotulo));
+    if (k.anterior != null && k.valor != null && k.anterior !== 0) {
+      const ch = k.valor / k.anterior - 1;
+      const bom = k.melhor === 'maior' ? ch > 0 : k.melhor === 'menor' ? ch < 0 : null;
+      const dl = el('span', 'delta ' + (bom == null ? 'flat' : bom ? 'up' : 'down'), F.pct.format(Math.abs(ch)) + (ch >= 0 ? ' ↗' : ' ↘'));
+      top.append(dl);
+    }
+    box.append(top, el('div', 'kpi-val', fmt(k.valor, k.formato)), el('small', null, k.nota || ('Comparado: ' + (rs.comparacao || 'período anterior'))));
+    kp.append(box);
+  });
+
+  // distribuição
+  const camp = (d.campanhas || []);
+  const ds = d.distribuicao || {};
+  $('#dist-t').textContent = ds.titulo || 'Investimento por tipo';
+  $('#dist-s').textContent = ds.subtitulo || '';
+  const tot = d3.sum(camp, (r) => r.gasto) || 1;
+  const grupos = d3.rollups(camp, (v) => d3.sum(v, (r) => r.gasto), (r) => r[ds.campo || 'grupo']).sort((a, b) => b[1] - a[1]);
+  const tons = ['var(--blue)', 'var(--blue-3)', 'var(--navy)', 'var(--violet)', 'var(--blue-2)'];
+  const dist = $('#dist'); dist.replaceChildren();
+  grupos.forEach(([g, v], i) => {
+    const row = el('div', 'dist-row');
+    const top = el('div', 'dist-top'); top.append(el('b', null, g), el('span', null, F.pct.format(v / tot)));
+    const tr = el('div', 'track'); const s = el('span'); s.style.width = (v / grupos[0][1] * 100) + '%'; s.style.background = tons[i % tons.length]; tr.append(s);
+    row.append(top, tr, el('small', null, fmt(v, 'brl') + ' investidos'));
+    dist.append(row);
+  });
+
+  // criativos (custo por visita)
+  const cv = $('#criativos'); cv.replaceChildren();
+  const vis = camp.filter((r) => r.resultado_tipo === 'Visita ao perfil').sort((a, b) => a.custo_por_resultado - b.custo_por_resultado);
+  const mx = d3.max(vis, (r) => r.custo_por_resultado) || 1;
+  const pc = {bom: 'var(--ok)', 'atenção': 'var(--warn)', ruim: 'var(--bad)'};
+  vis.forEach((r) => {
+    const row = el('div', 'dist-row');
+    const top = el('div', 'dist-top'); top.append(el('b', null, r.campanha.replace(/^Post: /, '')), el('span', null, fmt(r.custo_por_resultado, 'brl') + ' por visita'));
+    const tr = el('div', 'track'); const s = el('span'); s.style.width = Math.max(2, r.custo_por_resultado / mx * 100) + '%'; s.style.background = pc[r.parecer] || 'var(--faint)'; tr.append(s);
+    row.append(top, tr, el('small', null, fmt(r.resultados, 'num') + ' visitas · ' + fmt(r.gasto, 'brl') + ' · ' + r.porque));
+    cv.append(row);
+  });
+  if (!vis.length) cv.append(el('p', 'empty', 'Sem campanhas de visita ao perfil nesta leitura.'));
+
+  // parecer
+  const pa = d.parecer || {};
+  const par = $('#parecer'); par.replaceChildren();
+  [['bom', 'O que está bom', 'ul'], ['ruim', 'O que está ruim', 'ul'], ['fazer', 'O que fazer primeiro', 'ol'], ['lacunas', 'Falta você responder', 'ul']].forEach(([k, t, tag]) => {
+    const col = el('div', 'pcol'); col.dataset.k = k;
+    const h = el('h3'); h.append(el('i'), document.createTextNode(t));
+    const list = el(tag); (pa[k] || []).forEach((x) => list.append(el('li', null, x)));
+    col.append(h, list);
+    if (k === 'fazer') col.append(el('p', 'foot', 'Proposta. Cada ação só roda com o seu "pode".'));
+    par.append(col);
+  });
+
+  // série
+  const se = d.serie || {};
+  $('#ser-t').textContent = se.titulo || 'Evolução';
+  $('#ser-s').textContent = se.subtitulo || '';
+  $('#ser-n').textContent = se.nota || '';
+  const anos = [...new Set((se.pontos || []).map((p) => p.mes.slice(0, 4)))];
+  $('#ano').replaceChildren(...(anos.length ? anos : ['—']).map((a) => new Option(a === '—' ? a : 'Ano ' + a, a)));
+  drawChart(se);
+
+  // geo
+  const g = d.geo || {};
+  $('#geo-t').textContent = g.titulo || 'Onde a verba foi entregue';
+  $('#geo-s').textContent = g.subtitulo || '';
+  $('#geo-n').textContent = g.nota || '';
+  drawMap(g.pontos || []);
+
+  drawTable();
+  $('#fonte').replaceChildren(el('span', null, 'Fonte: ' + (d.fonte || '—') + '. Atualizado em ' + (d.atualizado ? d.atualizado.split('-').reverse().join('/') : '—') + '.'), el('span', null, 'Gerado pelo Jhon (/ojhon). Conta: ' + (c.conta || '—') + (c.conta_id ? ' (' + c.conta_id + ')' : '') + '.'));
+}
+
+function drawChart(se) {
+  const box = $('#chart'); box.replaceChildren();
+  const pts = se.pontos || [];
+  const linhas = se.linhas || [];
+  const cores = ['var(--blue)', 'var(--orange)'];
+  const lg = $('#legend'); lg.replaceChildren();
+  linhas.forEach((l, i) => { const s = el('span'); const dot = el('i'); dot.style.background = cores[i]; s.append(dot, document.createTextNode(l.rotulo)); lg.append(s); });
+  if (!pts.length) { box.append(el('p', 'empty', 'Sem série por mês nesta leitura.')); return; }
+  const W = box.clientWidth || 700, H = box.clientHeight || 300, m = {t: 10, r: 14, b: 26, l: 44};
+  const x = d3.scalePoint(pts.map((p) => p.mes), [m.l, W - m.r]).padding(0.15);
+  const ymax = d3.max(pts, (p) => d3.max(linhas, (l) => p[l.campo])) || 1;
+  const y = d3.scaleLinear([0, ymax], [H - m.b, m.t]).nice(5);
+  const svg = d3.select(box).append('svg').attr('viewBox', `0 0 ${W} ${H}`);
+  y.ticks(5).forEach((t) => {
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', 'var(--grid)');
+    svg.append('text').attr('x', m.l - 10).attr('y', y(t)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('fill', 'var(--muted)').attr('font-size', 12).text(F.comp.format(t));
+  });
+  pts.forEach((p) => svg.append('line').attr('x1', x(p.mes)).attr('x2', x(p.mes)).attr('y1', m.t).attr('y2', H - m.b).attr('stroke', 'var(--grid)'));
+  pts.forEach((p) => svg.append('text').attr('x', x(p.mes)).attr('y', H - 6).attr('text-anchor', 'middle').attr('fill', 'var(--muted)').attr('font-size', 12).text(mesCurto(p.mes)));
+  linhas.forEach((l, i) => {
+    svg.append('path').attr('fill', 'none').attr('stroke', cores[i]).attr('stroke-width', 2.2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round')
+      .attr('d', d3.line().x((p) => x(p.mes)).y((p) => y(p[l.campo]))(pts));
+  });
+  const rule = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', '#C7CCD6').attr('opacity', 0);
+  const dots = linhas.map((l, i) => svg.append('circle').attr('r', 4.5).attr('fill', cores[i]).attr('stroke', '#fff').attr('stroke-width', 2).attr('opacity', 0));
+  const tip = el('div', 'tip'); tip.hidden = true; box.append(tip);
+  const show = (p) => {
+    const cx = x(p.mes);
+    rule.attr('x1', cx).attr('x2', cx).attr('opacity', 1);
+    linhas.forEach((l, i) => dots[i].attr('cx', cx).attr('cy', y(p[l.campo])).attr('opacity', 1));
+    tip.replaceChildren(el('div', 'tip-h', mesNome(p.mes)));
+    linhas.forEach((l, i) => { const r = el('div', 'tip-r'); const ii = el('i'); ii.style.background = cores[i]; r.append(ii, document.createTextNode(l.rotulo), el('b', null, F.num.format(p[l.campo]))); tip.append(r); });
+    (se.extra || []).forEach((e) => { const r = el('div', 'tip-r'); r.append(document.createTextNode(e.rotulo), el('b', null, fmt(p[e.campo], e.formato))); tip.append(r); });
+    tip.hidden = false;
+    const scale = box.clientWidth / W;
+    let left = cx * scale + 14; if (left + tip.offsetWidth > box.clientWidth) left = cx * scale - tip.offsetWidth - 14;
+    tip.style.left = left + 'px';
+    tip.style.top = Math.max(0, y(d3.max(linhas, (l) => p[l.campo])) * scale - 10) + 'px';
+  };
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('mousemove', (ev) => {
+      const [mx] = d3.pointer(ev);
+      const p = pts.reduce((a, b) => Math.abs(x(b.mes) - mx) < Math.abs(x(a.mes) - mx) ? b : a);
+      show(p);
+    })
+    .on('mouseleave', () => { tip.hidden = true; rule.attr('opacity', 0); dots.forEach((dd) => dd.attr('opacity', 0)); });
+  // abre no pico, como na referência
+  const pico = pts.reduce((a, b) => (b[linhas[0].campo] > a[linhas[0].campo] ? b : a));
+  show(pico);
+}
+
+let LAND = null;
+async function terra() {
+  if (LAND !== null) return LAND;
+  try {
+    const cache = localStorage.getItem('jhon-land-dots');
+    if (cache) return (LAND = JSON.parse(cache));
+  } catch (e) {}
+  try {
+    const topo = await (await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/land-110m.json')).json();
+    const land = topojson.feature(topo, topo.objects.land);
+    const pts = [];
+    for (let lat = 78; lat >= -56; lat -= 2.4) for (let lon = -170; lon <= 180; lon += 2.4) if (d3.geoContains(land, [lon, lat])) pts.push([+lon.toFixed(1), +lat.toFixed(1)]);
+    try { localStorage.setItem('jhon-land-dots', JSON.stringify(pts)); } catch (e) {}
+    return (LAND = pts);
+  } catch (e) { return (LAND = []); }
+}
+
+let mapSeq = 0;
+async function drawMap(pinos) {
+  const seq = ++mapSeq;
+  const box = $('#map');
+  const dots = await terra();
+  if (seq !== mapSeq) return;
+  box.replaceChildren();
+  const W = box.clientWidth || 500, H = box.clientHeight || 260;
+  const proj = d3.geoEquirectangular().fitExtent([[4, 8], [W - 4, H - 4]], {type: 'MultiPoint', coordinates: [[-170, 78], [180, -56]]});
+  const svg = d3.select(box).append('svg').attr('viewBox', `0 0 ${W} ${H}`);
+  if (!dots.length) { svg.append('text').attr('x', W / 2).attr('y', H / 2).attr('text-anchor', 'middle').attr('fill', 'var(--muted)').attr('font-size', 12).text('Mapa precisa de internet na primeira abertura.'); }
+  const perto = (p) => pinos.some((q) => Math.abs(q.lon - p[0]) < 9 && Math.abs(q.lat - p[1]) < 9);
+  dots.forEach((p) => {
+    const [cx, cy] = proj(p);
+    svg.append('circle').attr('cx', cx).attr('cy', cy).attr('r', 1.6).attr('fill', perto(p) ? 'var(--blue)' : 'var(--dot)');
+  });
+  pinos.forEach((q) => {
+    const [cx, cy] = proj([q.lon, q.lat]);
+    const pin = el('div', 'pin'); pin.style.left = (cx / W * 100) + '%'; pin.style.top = (cy / H * 100 - 2) + '%';
+    pin.append(document.createTextNode(q.rotulo));
+    if (q.valor != null || q.texto) pin.append(el('b', null, q.valor != null ? F.pct0.format(q.valor) : q.texto));
+    box.append(pin);
+  });
+}
+
+function drawTable() {
+  const d = DADOS[atual]; const tb = $('#tbody'); tb.replaceChildren();
+  const ord = {bom: 0, 'atenção': 1, ruim: 2};
+  const q = busca.toLowerCase();
+  const rows = (d.campanhas || []).filter((r) => (!filtroTipo || r.grupo === filtroTipo) && (!q || (r.campanha + ' ' + r.grupo + ' ' + r.porque).toLowerCase().includes(q)))
+    .sort((a, b) => {
+      const va = sortKey === 'parecer' ? ord[a.parecer] : a[sortKey], vb = sortKey === 'parecer' ? ord[b.parecer] : b[sortKey];
+      if (va == null) return 1; if (vb == null) return -1;
+      return (typeof va === 'number' ? va - vb : String(va).localeCompare(String(vb), 'pt-BR')) * sortDir;
+    });
+  rows.forEach((r) => {
+    const tr = el('tr');
+    const pill = el('span', 'pill', r.parecer); pill.dataset.p = r.parecer;
+    const tdp = el('td'); tdp.append(pill);
+    tr.append(el('td', 'name', r.campanha), el('td', null, r.grupo), el('td', null, r.quando), el('td', 'num', fmt(r.gasto, 'brl')),
+      el('td', 'num', fmt(r.resultados, 'num')), el('td', null, r.resultado_tipo), el('td', 'num', fmt(r.custo_por_resultado, 'brl')), el('td', 'num', fmt(r.cpm, 'brl')), tdp, el('td', 'why', r.porque));
+    tb.append(tr);
+  });
+  if (!rows.length) { const tr = el('tr'); const td = el('td', 'empty', 'Nenhuma campanha com esse filtro.'); td.colSpan = 10; tr.append(td); tb.append(tr); }
+  $('#camp-s').textContent = rows.length + ' campanhas. Clique no título de uma coluna para ordenar.';
+}
+
+// abas
+const mostrar = (tab) => {
+  document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('section[data-sec]').forEach((s) => { s.hidden = !(tab === 'geral' || s.dataset.sec === tab); });
+  document.querySelectorAll('.side .nav-item[data-goto]').forEach((n) => n.classList.toggle('active', n.dataset.goto === tab || (tab === 'criativos' && n.dataset.goto === 'campanhas')));
+  if (tab === 'geral') { const d = DADOS[atual]; if (d) { drawChart(d.serie || {}); drawMap((d.geo || {}).pontos || []); } }
+  try { localStorage.setItem('jhon-aba', tab); } catch (e) {}
+};
+document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => mostrar(t.dataset.tab)));
+document.querySelectorAll('.side [data-goto]').forEach((n) => n.addEventListener('click', () => mostrar(n.dataset.goto)));
+document.querySelectorAll('.side [data-copy]').forEach((n) => n.addEventListener('click', () => {
+  navigator.clipboard && navigator.clipboard.writeText(n.dataset.copy).catch(() => {});
+  const old = n.lastChild.textContent; n.lastChild.textContent = 'Copiado: ' + n.dataset.copy.trim(); setTimeout(() => (n.lastChild.textContent = old), 1500);
+}));
+
+// tabela: ordenar
+document.querySelectorAll('th[data-k]').forEach((th) => th.addEventListener('click', () => {
+  const k = th.dataset.k;
+  sortDir = sortKey === k ? -sortDir : (['campanha', 'grupo', 'quando', 'resultado_tipo', 'parecer', 'porque'].includes(k) ? 1 : -1);
+  sortKey = k;
+  document.querySelectorAll('th[data-k]').forEach((t) => t.removeAttribute('aria-sort'));
+  th.setAttribute('aria-sort', sortDir === 1 ? 'ascending' : 'descending');
+  drawTable();
+}));
+
+// busca e filtro
+$('#q').addEventListener('input', (e) => { busca = e.target.value; drawTable(); if (busca) mostrar('campanhas'); });
+document.addEventListener('keydown', (e) => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); $('#q').focus(); } });
+$('#filtro').addEventListener('change', (e) => { filtroTipo = e.target.value; drawTable(); });
+
+// cliente
+const who = $('#who'), menu = $('#menu');
+who.addEventListener('click', (e) => {
+  if (e.target.closest('.menu')) return;
+  menu.replaceChildren(...ids.map((id) => {
+    const b = el('button'); const c = DADOS[id].cliente || {};
+    const av = el('span', 'avatar', c.iniciais || id.slice(0, 2).toUpperCase()); av.style.width = av.style.height = '26px'; av.style.fontSize = '10px';
+    b.append(av, document.createTextNode((c.nome || id) + (id === atual ? '  ✓' : '')));
+    b.addEventListener('click', () => { atual = id; menu.hidden = true; filtroTipo = ''; busca = ''; $('#q').value = ''; render(); });
+    return b;
+  }));
+  menu.hidden = !menu.hidden;
+});
+document.addEventListener('click', (e) => { if (!e.target.closest('#who')) menu.hidden = true; });
+
+// exportar CSV das campanhas
+$('#exportar').addEventListener('click', () => {
+  const d = DADOS[atual]; const cols = ['campanha', 'grupo', 'quando', 'gasto', 'resultados', 'resultado_tipo', 'custo_por_resultado', 'cpm', 'cliques_link', 'alcance', 'frequencia', 'parecer', 'porque'];
+  const esc = (v) => v == null ? '' : /[";\n]/.test(String(v)) ? '"' + String(v).replace(/"/g, '""') + '"' : String(v);
+  const csv = [cols.join(';'), ...(d.campanhas || []).map((r) => cols.map((k) => esc(r[k])).join(';'))].join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], {type: 'text/csv'}));
+  a.download = 'jhon_' + atual + '_campanhas.csv'; a.click();
+});
+
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { const d = DADOS[atual]; if (d) { drawChart(d.serie || {}); drawMap((d.geo || {}).pontos || []); } }, 150); });
+
+render();
+let aba = 'geral'; try { aba = localStorage.getItem('jhon-aba') || 'geral'; } catch (e) {}
+mostrar(aba);
+})();
+</script>
+</body>
+</html>
