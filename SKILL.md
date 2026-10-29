@@ -39,7 +39,7 @@ O Jhon usa o MESMO cliente do Gab e acrescenta só a parte de tráfego:
 | Motor | O que é | Como usar |
 |---|---|---|
 | **claude-ads** (AgriciDaniel, MIT) | sistema completo de auditoria e planejamento com 33 sub-skills `ads-*`, 25 agentes `audit-*` e referências | chamar pela Skill: `ads` (orquestrador) ou direto a sub-skill (`ads-meta`, `ads-google`...). Código em `vendor/claude-ads/` |
-| **playbooks** (marketing-skills, irinabuht12-oss, MIT) | 49 roteiros de análise de uma tarefa só (CPA, desperdício, fadiga, ganchos, relatório...) | ler `SKILL_DIR/playbooks/<nome>.md` e seguir. Índice: `docs/PLAYBOOKS.md` |
+| **playbooks** (marketing-skills, irinabuht12-oss, MIT) | 49 roteiros de análise de uma tarefa só (CPA, desperdício, fadiga, ganchos, relatório...) + 1 próprio do Jhon (`landing-page-venda-alta-conversao`) | ler `SKILL_DIR/playbooks/<nome>.md` e seguir. Índice: `docs/PLAYBOOKS.md` |
 
 Quando os dois servem, usar o claude-ads para o diagnóstico amplo e o playbook para a tarefa pontual ou a entrega final (narrativa, lista de exclusão, variações).
 
@@ -66,6 +66,7 @@ Quando os dois servem, usar o claude-ads para o diagnóstico amplo e o playbook 
 | Público, frequência, retargeting | `ads-meta` | `audience-overlap-analysis`, `frequency-cap-recommendations`, `retargeting-window-analysis`, `icp-research-assistant` |
 | Rastreamento e atribuição | `ads-attribution`, `ads-server-side-tracking` | `utm-tracking-generator`, `attribution-model-comparison`, `conversion-path-analysis` |
 | Landing page | `ads-landing` | `landing-page-audit`, `landing-page-audit-39` |
+| Criar ou reescrever página de vendas (infoproduto, Meta Ads) e dar nota de 0 a 100 | `ads-landing` (auditoria técnica) | `landing-page-venda-alta-conversao` |
 | Teste A/B | `ads-test` | `ab-test-setup-and-analysis`, `ab-test-analyzer` |
 | Relatório para o cliente | `ads-report` | `weekly-account-summary`, `client-report-narratives`, `performance-benchmarking` |
 | Estrutura e nomes de campanha | | `account-structure-review`, `campaign-naming-convention-builder`, `bid-strategy-recommendations`, `quality-score-breakdown`, `ad-extension-audit`, `device-performance-split`, `geo-performance-analysis`, `day-hour-performance-breakdown` |
@@ -90,7 +91,7 @@ O mapa do Gab (no cofre dele) não chama o Jhon. Quando um pedido de anúncio em
 - `painel [cliente]`: abre o painel do Jhon no navegador (`painel/painel.py`), na ID do Jhon (`assets/id/ID.md`), claro ou escuro: menu lateral (Painel, Canais, Pedir ao Jhon) que vira trilho de ícones em tela média e gaveta no celular, seletor de cliente, busca ⌘K, Exportar CSV, abas Visão geral / Campanhas / Criativos / Parecer; resumo 2x2 com variação contra o período anterior, mapa de entrega, evolução por mês, investimento por tipo, parecer do Jhon em 4 colunas (bom, ruim, o que fazer primeiro, falta responder) e tabela de campanhas com selo bom/atenção/ruim. Sem `painel.json` do cliente: montar a partir da última leitura e do `trafego.md`.
 - `auditoria [cliente] [plataforma]`, `plano [cliente]`, `criativo [cliente]`, `concorrente [cliente]`, `relatorio [cliente]`: atalhos para a linha do mapa.
 - `update`: `git pull` da skill. Para atualizar o claude-ads: `bash SKILL_DIR/install.sh --so-ads`. O `vendor/claude-ads` é uma cópia fixa: para trazer uma versão nova, comparar a tag mais recente de github.com/AgriciDaniel/claude-ads com a primeira `## [x.y.z]` do `vendor/claude-ads/CHANGELOG.md`, trocar a pasta pela tag (`rsync --delete`), rodar o `--so-ads`, anotar no CHANGELOG e commitar.
-- `doctor`: confere se o claude-ads está instalado (`~/.claude/skills/ads`, `ads-*`, `~/.claude/agents/audit-*`), se as dependências Python dele existem (`~/.claude/skills/ads/.venv`; sem elas não rodam print de site, análise automática de landing, PDF e imagem), se a versão do vendor é a última tag do GitHub, se os 49 playbooks estão em `playbooks/` se o MCP `facebook-ads` responde (`claude mcp list`), se o MCP oficial do Meta Ads (`https://mcp.facebook.com/ads`) está conectado (sem ele: sugerir conectar) e se `painel/painel.py --checar` passa. Erro "installed version mismatch" no instalador = pacote solto em `~/Library/Python`; o `install.sh` já usa `PYTHONNOUSERSITE=1`. Corrige o que der e diz em uma linha o que só o usuário pode fazer.
+- `doctor`: confere se o claude-ads está instalado (`~/.claude/skills/ads`, `ads-*`, `~/.claude/agents/audit-*`), se as dependências Python dele existem (`~/.claude/skills/ads/.venv`; sem elas não rodam print de site, análise automática de landing, PDF e imagem), se a versão do vendor é a última tag do GitHub, se os 50 playbooks (49 do marketing-skills + 1 do Jhon) estão em `playbooks/` se o MCP `facebook-ads` responde (`claude mcp list`), se o MCP oficial do Meta Ads (`https://mcp.facebook.com/ads`) está conectado (sem ele: sugerir conectar) e se `painel/painel.py --checar` passa. Erro "installed version mismatch" no instalador = pacote solto em `~/Library/Python`; o `install.sh` já usa `PYTHONNOUSERSITE=1`. Corrige o que der e diz em uma linha o que só o usuário pode fazer.
 
 ## Créditos
 

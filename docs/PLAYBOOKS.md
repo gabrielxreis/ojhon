@@ -39,6 +39,7 @@ Ler `playbooks/<nome>.md` inteiro só quando o pedido cair nele. Índice gerado 
 | `keyword-cannibalization-check` | Google | Identifies where your own keywords and campaigns are competing against each other in Google Ads auctions |
 | `landing-page-audit-39` | Google and Meta | CRO analysis for landing pages evaluating headline clarity, CTA placement, trust signals, mobile friction, and conversion killers |
 | `landing-page-audit` | Google and Meta | Reviews your landing pages against the ads driving traffic to them |
+| `landing-page-venda-alta-conversao` | Meta | (do Jhon, pt-BR) Cria e pontua de 0 a 100 página de vendas longa de infoproduto no Brasil: seções, mobile, velocidade, urgência honesta, compliance de finanças, Pixel + CAPI + UTM |
 | `linkedin-ads-audit` | LinkedIn | LinkedIn Ads campaign analysis for B2B marketers detecting CTR issues, audience quality problems, lead gen form friction, and budget inefficiencies |
 | `meta-ads-audit` | Meta | Meta/Facebook/Instagram Ads campaign structure analysis detecting creative fatigue, audience overlap, scaling opportunities, and iOS tracking verifica |
 | `pacing-monitor` | Google and Meta | Tracks daily spend against monthly budget targets across all campaigns and accounts |
