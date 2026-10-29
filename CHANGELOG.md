@@ -7,6 +7,7 @@ Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` segu
 - **Instalador:** ignora pacote Python solto em ~/Library/Python, que derrubava as dependências do claude-ads ("installed version mismatch").
 - **Concorrentes de verdade:** o Jhon usa a Biblioteca de Anúncios do Meta (MCP opcional, sem token) para puxar os anúncios ativos dos concorrentes no Brasil.
 - **Venda real:** com o MCP da Hotmart ligado, ROAS e CAC saem da venda, não do pixel (só leitura).
+- **Painel do cliente (`/ojhon painel`):** dashboard com os números da conta, o que está bom e ruim e o parecer do Jhon.
 - **update e doctor:** conferem se o claude-ads está na última versão e se o MCP da Ad Library responde.
 
 ## 2026.10.13-1 (13/10/2026)
