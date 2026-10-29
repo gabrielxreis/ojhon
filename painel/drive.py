@@ -29,6 +29,8 @@ def gws(*args, params=None, corpo=None, upload=None, saida=None):
         cmd += ["--json", json.dumps(corpo)]
     if upload:
         cmd += ["--upload", upload]
+        if upload.endswith(".md"):
+            cmd += ["--upload-content-type", "text/markdown"]
     if saida:
         cmd += ["-o", saida]
     r = subprocess.run(cmd, capture_output=True, text=True)
@@ -98,6 +100,26 @@ def puxar_pasta(pasta_id, local):
     return n
 
 
+def atualizar_doc(local, pasta_id):
+    """Reescreve o Google Doc legível "<Cliente> - Tráfego pago (Jhon)" que fica na mesma pasta que "Jhon - <cliente>"
+    (para quem procura à mão no Drive). Cria o Doc se ainda não existir. Nunca cria "v2": atualiza o mesmo arquivo."""
+    md = os.path.join(local, "trafego.md")
+    if not os.path.isfile(md):
+        return None
+    pai = gws("files", "get", params={"fileId": pasta_id, "supportsAllDrives": True, "fields": "parents"}).get("parents", [None])[0]
+    if not pai:
+        return None
+    docs = [f for f in listar(f"'{pai}' in parents and mimeType = 'application/vnd.google-apps.document' and trashed = false")
+            if "Tráfego pago (Jhon)" in f["name"] and " v2" not in f["name"]]
+    if docs:
+        gws("files", "update", params={"fileId": docs[0]["id"], "supportsAllDrives": True}, corpo={}, upload=md)
+        return docs[0]["name"]
+    titulo = (open(md, encoding="utf-8").readline().split(":", 1)[-1].strip() or "Cliente") + " - Tráfego pago (Jhon)"
+    gws("files", "create", params={"supportsAllDrives": True},
+        corpo={"name": titulo, "parents": [pai], "mimeType": "application/vnd.google-apps.document"}, upload=md)
+    return titulo
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("acao", choices=["subir", "puxar"])
@@ -120,6 +142,9 @@ def main():
             sub = achar_pasta("miniaturas", pasta) or criar_pasta("miniaturas", pasta)
             n += subir_pasta(os.path.join(local, "miniaturas"), sub)
         print(f"DRIVE_SUBIU: {n} arquivo(s) novo(s) ou atualizado(s) em \"{nome}\" (https://drive.google.com/drive/folders/{pasta})")
+        doc = atualizar_doc(local, pasta)
+        if doc:
+            print(f"DRIVE_DOC: \"{doc}\" reescrito com o trafego.md (mesmo Doc, sem cópia nova)")
     else:
         if not pasta:
             raise SystemExit(f'SEM_PASTA: não achei "{nome}" no Drive (alguém precisa rodar `subir` primeiro)')

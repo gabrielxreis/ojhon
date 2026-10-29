@@ -1,6 +1,9 @@
 # Novidades do Jhon (/ojhon)
 
-Mais novo em cima. Cada versão é uma linha `## 2026.10.29-8
+Mais novo em cima. Cada versão é uma linha `## 2026.10.29-9
+- **Doc de tráfego sempre em dia:** o `drive.py subir` reescreve o Google Doc "<Cliente> - Tráfego pago (Jhon)" ao lado da pasta de dados, no mesmo arquivo (acabaram as cópias "v2"). Regra nova: pasta do cliente no Drive organizada em pastas numeradas.
+
+## 2026.10.29-8
 - **Tráfego no Drive para outras máquinas:** `painel/drive.py subir|puxar --cliente <c>` leva `clientes/<c>/` (trafego.md, painel.json, miniaturas) para a pasta "Jhon - <c>" no Google Drive e traz de volta. O Jhon puxa no passo zero e sobe no fim de cada trabalho. Usa o `gws`; nenhum ID de cliente vai para o git.
 
 ## AAAA.MM.DD-N (DD/MM/AAAA)` seguida do que mudou, em linguagem de usuário.
