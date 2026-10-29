@@ -120,6 +120,9 @@ def main():
     versao = hashlib.sha1((corpo + atual).encode("utf-8")).hexdigest()[:12]
     js = ("window.JHON_DADOS = " + corpo + ";\nwindow.JHON_ATUAL = " + json.dumps(atual)
           + ";\nwindow.JHON_VERSAO = " + json.dumps(versao) + ";\n")
+    fav = os.path.join(AQUI, "favorito.url.txt")
+    if os.path.isfile(fav):
+        js += "window.JHON_FAVORITO = " + json.dumps(open(fav, encoding="utf-8").read().strip()) + ";\n"
     with open(os.path.join(AQUI, "dados.js"), "w", encoding="utf-8") as f:
         f.write(js)
 

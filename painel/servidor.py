@@ -11,6 +11,7 @@ import argparse
 import io
 import os
 import re
+import subprocess
 import sys
 import zipfile
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -55,6 +56,9 @@ class Painel(SimpleHTTPRequestHandler):
         dados = self.rfile.read(n)
         with open(os.path.join(pasta, f"concorrente_{ida}.mp4"), "wb") as f:
             f.write(dados)
+        # refaz os dados do painel na hora: a aba aberta liga o ⬇ deste vídeo em poucos segundos
+        subprocess.run([sys.executable, os.path.join(SKILL, "painel", "painel.py"), "--cliente", cliente, "--nao-abrir"],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
         self.send_response(200); self.cors(); self.end_headers()
         self.wfile.write(b"ok")
 

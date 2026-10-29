@@ -22,6 +22,7 @@ window.addEventListener('message', async (e) => {
     const r = await fetch('/receber?cliente=' + d.cliente + '&id=' + d.id, {method: 'POST', body: d.blob, headers: {'Content-Type': 'video/mp4'}});
     msg.textContent = r.ok ? 'Vídeo salvo. Pode fechar esta janela.' : 'O servidor recusou o vídeo (' + r.status + ').';
     e.source && e.source.postMessage({jhon: true, id: d.id, ok: r.ok}, '*');
+    if (r.ok) setTimeout(() => window.close(), 300);
   } catch (err) {
     msg.textContent = 'Não consegui salvar: ' + err.message;
     e.source && e.source.postMessage({jhon: true, id: d.id, ok: false}, '*');

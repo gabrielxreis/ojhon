@@ -2,6 +2,9 @@
 
 Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` seguida do que mudou, em linguagem de usuário.
 
+## 2026.10.29-7 (29/10/2026)
+- **Baixar só o que você quer, direto em Downloads:** favorito "⬇ Jhon" no Chrome (arraste uma vez do painel). O ⬇ de qualquer criativo, inclusive em Outros concorrentes, abre o anúncio; um clique no favorito salva o vídeo em Downloads. Nada fica guardado antes.
+
 ## 2026.10.29-6 (29/10/2026)
 - **Concorrentes repaginados:** destaque para o principal concorrente (foto, quantos anúncios ativos, ganchos que usa e criativos campeões), os outros 4 principais em cards com foto, ranking de quem mais anuncia, todos os criativos campeões ordenados pelo tempo no ar e os demais concorrentes em lista. Cada criativo abre no player da Biblioteca do Meta.
 - **Miniaturas dos campeões:** cada criativo campeão aparece com a capa do vídeo, sem baixar o vídeo.
