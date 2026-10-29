@@ -197,6 +197,7 @@ Modelo em [`clientes/_exemplo/trafego.md`](clientes/_exemplo/trafego.md). A past
 |---|---|---|---|
 | [claude-ads](https://github.com/AgriciDaniel/claude-ads) | AgriciDaniel (MIT) | skill `/ads`, 33 sub-skills `ads-*` (plataformas, plano, verba, criativo, landing, rastreamento, testes, relatório), 25 agentes de auditoria, referências e benchmarks | `vendor/claude-ads`; instalado em `~/.claude/skills/ads*` e `~/.claude/agents` |
 | [marketing-skills](https://github.com/irinabuht12-oss/marketing-skills) | irinabuht12-oss (MIT) | 49 playbooks de uma tarefa (Google, Meta, LinkedIn, Reddit, SEO, visibilidade em IA, e-mail) | `playbooks/` (índice em [`docs/PLAYBOOKS.md`](docs/PLAYBOOKS.md)); original em `vendor/marketing-skills` |
+| [facebook-ads-library-mcp](https://github.com/RamsesAguirre777/facebook-ads-library-mcp) | RamsesAguirre777 (MIT) | MCP opcional que lê a Biblioteca de Anúncios pública do Meta (concorrentes, sem token) | instalado à parte pelo usuário; não vai no repositório |
 
 
 # ESTRUTURA DO REPOSITÓRIO

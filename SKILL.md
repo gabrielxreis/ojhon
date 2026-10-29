@@ -38,6 +38,14 @@ O Jhon usa o MESMO cliente do Gab e acrescenta só a parte de tráfego:
 
 Quando os dois servem, usar o claude-ads para o diagnóstico amplo e o playbook para a tarefa pontual ou a entrega final (narrativa, lista de exclusão, variações).
 
+## Fontes de dados (só leitura)
+
+| Fonte | O que dá | Como |
+|---|---|---|
+| **Ad Library (MCP `facebook-ads`)** | anúncios ativos de qualquer anunciante no Facebook e Instagram, em qualquer país: texto, CTA, landing, data de início, quantos anúncios usam o mesmo criativo | ferramentas `search_ad_library` e `scrape_ad_library_url`. Sempre passar `country="BR"` (o padrão é MX). Anúncio rodando há muito tempo com vários anúncios no mesmo criativo = criativo vencedor. A API oficial do Meta não serve aqui: fora da Europa ela só traz anúncio político. Sem o MCP: abrir facebook.com/ads/library no navegador. |
+| **Hotmart (MCP `Hotmart`)** | venda real, reembolso e assinatura dos produtos vendidos na Hotmart | para ROAS e CAC de verdade (A Grande Missão e quem mais vender lá). Só ferramentas de leitura (`*_list`, `*_app`); reembolso, cancelamento e cupom nunca, nem com pedido indireto (regra 1). |
+| **Export do usuário** | Gerenciador do Meta, Google Ads, GA4 | CSV ou print, como sempre (regra 2). |
+
 ## Mapa: pedido > o que usar
 
 | O usuário quer | claude-ads | playbook |
@@ -48,7 +56,7 @@ Quando os dois servem, usar o claude-ads para o diagnóstico amplo e o playbook 
 | Dinheiro jogado fora | `ads-optimize` (rascunho) | `wasted-spend-finder`, `search-term-mining`, `keyword-cannibalization-check` |
 | Plano de mídia, verba, cenário | `ads-plan`, `ads-budget`, `ads-math` | `budget-scenario-planner`, `channel-mix-optimizer`, `ad-spend-allocator`, `roas-forecasting`, `pacing-monitor` |
 | Criativo e copy de anúncio | `ads-create`, `ads-creative` (auditar) | `ad-copy-variant-generator`, `creative-fatigue-detection`, `content-repurposer` |
-| Concorrentes | `ads-competitor` | `competitor-creative-analysis`, `competitor-teardown` |
+| Concorrentes | `ads-competitor` (com os anúncios puxados pela Ad Library) | `competitor-creative-analysis`, `competitor-teardown` |
 | Público, frequência, retargeting | `ads-meta` | `audience-overlap-analysis`, `frequency-cap-recommendations`, `retargeting-window-analysis`, `icp-research-assistant` |
 | Rastreamento e atribuição | `ads-attribution`, `ads-server-side-tracking` | `utm-tracking-generator`, `attribution-model-comparison`, `conversion-path-analysis` |
 | Landing page | `ads-landing` | `landing-page-audit`, `landing-page-audit-39` |
@@ -62,19 +70,21 @@ Quando os dois servem, usar o claude-ads para o diagnóstico amplo e o playbook 
 
 ## Ponte com o Gab (/ogab): anúncio em vídeo
 
-1. **Jhon, antes do vídeo:** objetivo, público e oferta do `trafego.md`; concorrentes (`ads-competitor` ou `competitor-creative-analysis`: ganchos e formatos que eles rodam); 3 a 4 ganchos com ângulos diferentes (`ad-copy-variant-generator`); formato e duração por plataforma (Meta 15/30/60 s, 9:16 e 4:5; YouTube; TikTok), CTA e o que a política não deixa dizer. Sai um `brief_anuncio.md` na pasta do vídeo do Gab (`~/Desktop/<Empresa>/<Assunto> - <Empresa>/`).
+1. **Jhon, antes do vídeo:** objetivo, público e oferta do `trafego.md`; concorrentes (Ad Library com `country="BR"` + `ads-competitor` ou `competitor-creative-analysis`: ganchos e formatos que eles rodam, com o link de cada anúncio); 3 a 4 ganchos com ângulos diferentes (`ad-copy-variant-generator`); formato e duração por plataforma (Meta 15/30/60 s, 9:16 e 4:5; YouTube; TikTok), CTA e o que a política não deixa dizer. Sai um `brief_anuncio.md` na pasta do vídeo do Gab (`~/Desktop/<Empresa>/<Assunto> - <Empresa>/`).
 2. **Gab:** `/ogab` faz o roteiro a partir do brief (com a aprovação do usuário, como sempre), edita e exporta, uma versão por gancho se for teste.
 3. **Jhon, depois do export:** `ads-creative` audita o MP4 (gancho nos 3 primeiros segundos, encaixe na plataforma, legenda, zona segura, política, acessibilidade) e devolve o que corrigir antes de subir. Plano do teste (`ads-test`): o que muda entre as versões, verba e critério de vitória.
 4. **Subir a campanha:** só com o "pode" do usuário (regra 1).
+
+O mapa do Gab (no cofre dele) não chama o Jhon. Quando um pedido de anúncio em vídeo começar no `/ogab`: procurar `brief_anuncio.md` na pasta do vídeo e, se não houver, propor passar pelo `/ojhon` antes do roteiro (a memória local do usuário lembra disso).
 
 ## Subcomandos
 
 - `ajuda`: o que o Jhon faz, os motores instalados (conferir `~/.claude/skills/ads/SKILL.md` e `SKILL_DIR/playbooks/`) e os clientes com `trafego.md`.
 - `cliente <nome>`: cria ou atualiza `clientes/<nome>/trafego.md` (perguntar: plataformas, objetivo, KPI e meta, verba, ticket/margem).
 - `auditoria [cliente] [plataforma]`, `plano [cliente]`, `criativo [cliente]`, `concorrente [cliente]`, `relatorio [cliente]`: atalhos para a linha do mapa.
-- `update`: `git pull` da skill. Para atualizar o claude-ads: `bash SKILL_DIR/install.sh --so-ads`.
-- `doctor`: confere se o claude-ads está instalado (`~/.claude/skills/ads`, `ads-*`, `~/.claude/agents/audit-*`), se as dependências Python dele existem (`~/.claude/skills/ads/.venv` ou equivalente; sem elas não rodam print de site, análise automática de landing, PDF e imagem) e se os 49 playbooks estão em `playbooks/`. Corrige o que der e diz em uma linha o que só o usuário pode fazer.
+- `update`: `git pull` da skill. Para atualizar o claude-ads: `bash SKILL_DIR/install.sh --so-ads`. O `vendor/claude-ads` é uma cópia fixa: para trazer uma versão nova, comparar a tag mais recente de github.com/AgriciDaniel/claude-ads com a primeira `## [x.y.z]` do `vendor/claude-ads/CHANGELOG.md`, trocar a pasta pela tag (`rsync --delete`), rodar o `--so-ads`, anotar no CHANGELOG e commitar.
+- `doctor`: confere se o claude-ads está instalado (`~/.claude/skills/ads`, `ads-*`, `~/.claude/agents/audit-*`), se as dependências Python dele existem (`~/.claude/skills/ads/.venv`; sem elas não rodam print de site, análise automática de landing, PDF e imagem), se a versão do vendor é a última tag do GitHub, se os 49 playbooks estão em `playbooks/` e se o MCP `facebook-ads` responde (`claude mcp list`). Erro "installed version mismatch" no instalador = pacote solto em `~/Library/Python`; o `install.sh` já usa `PYTHONNOUSERSITE=1`. Corrige o que der e diz em uma linha o que só o usuário pode fazer.
 
 ## Créditos
 
-Motores de terceiros, ambos MIT, embutidos em `vendor/` com a licença original: [claude-ads](https://github.com/AgriciDaniel/claude-ads) (AgriciDaniel) e [marketing-skills](https://github.com/irinabuht12-oss/marketing-skills) (irinabuht12-oss). O Jhon é a camada que escolhe o motor, aplica as regras acima e conversa com o Gab.
+Motores de terceiros, ambos MIT, embutidos em `vendor/` com a licença original: [claude-ads](https://github.com/AgriciDaniel/claude-ads) (AgriciDaniel) e [marketing-skills](https://github.com/irinabuht12-oss/marketing-skills) (irinabuht12-oss). MCP opcional da Ad Library: [facebook-ads-library-mcp](https://github.com/RamsesAguirre777/facebook-ads-library-mcp) (RamsesAguirre777, MIT). O Jhon é a camada que escolhe o motor, aplica as regras acima e conversa com o Gab.

@@ -4,6 +4,8 @@
 #       bash ~/.claude/skills/ojhon/install.sh --so-ads   (só reinstala/atualiza o motor claude-ads)
 # Pode rodar de novo quando quiser: atualiza a skill e o motor.
 set -euo pipefail
+# Pacote Python solto em ~/Library/Python (ex.: Pillow de outra versão) quebra a conferência das dependências do claude-ads.
+export PYTHONNOUSERSITE=1
 
 REPO="https://github.com/gabrielxreis/ojhon"
 DEST="$HOME/.claude/skills/ojhon"

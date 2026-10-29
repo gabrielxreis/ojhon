@@ -5,17 +5,19 @@ title: "Claude Ads"
 abstract: >
   Claude-first, portable paid-media operations across Google, Meta, YouTube,
   LinkedIn, TikTok, Microsoft, Apple, Amazon, Reddit, Pinterest, Snapchat, and
-  X. Provides source-grounded audits, deterministic scoring, versioned JSON
+  X. Provides source-grounded audits, deterministic findings and evidence coverage, versioned JSON
   contracts, lifecycle workflows, client reports, and capability-gated account
   changes for professional operators.
 authors:
-  - alias: AgriciDaniel
-    name-particle: ""
+  - given-names: Daniel
+    family-names: Agrici
+    alias: AgriciDaniel
+    website: "https://agricidaniel.com"
 repository-code: "https://github.com/AgriciDaniel/claude-ads"
 url: "https://github.com/AgriciDaniel/claude-ads"
 license: MIT
-version: "2.0.2"
-date-released: "2026-09-10"
+version: "2.1.0"
+date-released: "2026-10-16"
 keywords:
   - paid advertising
   - google ads
