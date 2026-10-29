@@ -4,6 +4,7 @@ Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` segu
 
 ## 2026.10.29-6 (29/10/2026)
 - **Concorrentes repaginados:** destaque para o principal concorrente (foto, quantos anúncios ativos, ganchos que usa e criativos campeões), os outros 4 principais em cards com foto, ranking de quem mais anuncia, todos os criativos campeões ordenados pelo tempo no ar e os demais concorrentes em lista. Cada criativo abre no player da Biblioteca do Meta.
+- **Miniaturas dos campeões:** cada criativo campeão aparece com a capa do vídeo, sem baixar o vídeo.
 
 ## 2026.10.29-5 (29/10/2026)
 - **Painel sempre em dia:** todo comando do /ojhon atualiza o painel no começo e no fim. A aba aberta se atualiza sozinha em poucos segundos (aparece "O Jhon atualizou o painel") e não abre aba nova a cada comando.

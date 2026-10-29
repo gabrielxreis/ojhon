@@ -369,6 +369,10 @@ tbody tr:hover td{background:var(--hover)}
 .det summary{cursor:pointer;font-weight:600;font-size:14px;padding:6px 0}
 .det .testes{margin-top:10px}
 @media (max-width:767px){.chefe-nums{margin-left:0}.lc{grid-template-columns:auto 1fr}.lc-leitura{grid-column:1/-1}}
+.com-mini{background-size:cover!important;background-position:center top!important}
+.camp-tela.com-mini::after,.anuncio .tela.com-mini::after{background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.55))}
+.camp-tela.com-mini .play,.anuncio .tela.com-mini .play{background:rgba(0,0,0,.45);backdrop-filter:blur(2px)}
+.mini-play.com-mini{width:40px;height:56px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.8)}
 </style>
 </head>
 <body>
@@ -817,7 +821,8 @@ function avatar(p, tam) {
 }
 function campeao(c, quem) {
   const t = el('div', 'camp');
-  const tela = el('button', 'camp-tela'); tela.setAttribute('aria-label', 'Assistir: ' + c.titulo);
+  const tela = el('button', 'camp-tela' + (c.miniatura ? ' com-mini' : '')); tela.setAttribute('aria-label', 'Assistir: ' + c.titulo);
+  if (c.miniatura) tela.style.backgroundImage = 'url("' + c.miniatura + '")';
   tela.append(el('span', 'play', '▶'));
   if (quem) { const av = avatar(quem, 28); av.classList.add('camp-av'); tela.append(av); }
   tela.append(el('span', 'camp-dias', c.dias + ' dias no ar'));
@@ -860,7 +865,7 @@ function desenharConcorrentes() {
       cab.append(el('span', 'rank', '#' + (i + 2)), avatar(p, 48), nm);
       const lst = el('div', 'top-camps');
       p.campeoes.slice(0, 2).forEach((cp) => {
-        const r = el('button', 'mini'); r.append(el('span', 'mini-play', '▶'));
+        const r = el('button', 'mini'); const mp = el('span', 'mini-play' + (cp.miniatura ? ' com-mini' : ''), '▶'); if (cp.miniatura) mp.style.backgroundImage = 'url("' + cp.miniatura + '")'; r.append(mp);
         const tx = el('span', 'mini-tx'); tx.append(el('b', null, cp.titulo), el('small', null, cp.dias + ' dias no ar · ' + cp.motivo));
         r.append(tx); r.addEventListener('click', () => player(cp.link)); lst.append(r);
       });
@@ -915,7 +920,7 @@ function desenharConcorrentes() {
       const c = el('div', 'teste anuncio');
       const top = el('div', 'teste-top'); top.append(el('b', null, a.anunciante));
       const dd = diasNoAr(a.desde, d.atualizado); const pill = el('span', 'pill', dd + ' dias'); pill.dataset.p = dd >= 60 ? 'bom' : 'atenção'; top.append(pill);
-      const tela = el('button', 'tela'); tela.append(el('span', 'play', '▶'), el('small', null, 'Assistir na Biblioteca')); tela.addEventListener('click', () => player(a.link));
+      const tela = el('button', 'tela' + (a.miniatura ? ' com-mini' : '')); if (a.miniatura) tela.style.backgroundImage = 'url("' + a.miniatura + '")'; tela.append(el('span', 'play', '▶'), el('small', null, 'Assistir na Biblioteca')); tela.addEventListener('click', () => player(a.link));
       c.append(top, tela, el('q', null, a.texto), el('small', null, a.categoria + ' · ID ' + a.id));
       grade.append(c);
     });
