@@ -2,6 +2,9 @@
 
 Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` seguida do que mudou, em linguagem de usuário.
 
+## 2026.10.29-11 (29/10/2026)
+- **Jhon atualiza o CRM do cliente:** cliente com `clientes/<cliente>/crm.json` (como o X-Trader, em crm.xtraderacademy.com) recebe os números novos do Meta Ads no CRM ao fim de todo trabalho do Jhon na conta, sozinho, e a conversa mostra `CRM_ATUALIZADO` ou o erro.
+
 ## 2026.10.29-10 (29/10/2026)
 - **Página de vendas que converte:** playbook novo `landing-page-venda-alta-conversao` para criar ou reescrever a página de vendas de curso e infoproduto (ticket perto de R$ 997, tráfego do Meta, celular primeiro): as 13 seções na ordem, barra fixa no celular, metas de velocidade, urgência só verdadeira (sem contador falso), cuidados do nicho de finanças, Pixel + CAPI + UTM até o checkout e nota de 0 a 100 para qualquer página.
 
