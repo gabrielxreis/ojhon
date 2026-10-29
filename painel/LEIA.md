@@ -3,7 +3,7 @@
 O Jhon mostra todo insight e resultado aqui: um painel local no navegador (layout de dashboard: barra lateral, seletor de cliente, busca ⌘K, Exportar CSV, abas Visão geral / Campanhas / Criativos / Parecer).
 
 ## Como abrir
-O painel roda num servidor local só da sua máquina (`painel/servidor.py`, `http://127.0.0.1:47830/painel/index.html`), que o `painel.py` sobe sozinho. É ele que faz o ⬇ baixar o vídeo de verdade (aberto como arquivo, o Chrome só abria o vídeo).
+O painel roda num servidor local só da sua máquina (`painel/servidor.py`, `http://127.0.0.1:47830/painel/index.html`), que o `painel.py` sobe sozinho. É ele que faz o ⬇ baixar o vídeo de verdade (aberto como arquivo, o Chrome só abria o vídeo) e monta o zip dos botões "Baixar todos" (`/zip?cliente=&ids=&nomes=&nome=`). O Chrome segura o segundo download seguido de um mesmo site até a pessoa escolher "Sempre permitir" no ícone da barra de endereço.
 
 ```
 python3 ~/.claude/skills/ojhon/painel/painel.py --cliente <pasta do cliente>

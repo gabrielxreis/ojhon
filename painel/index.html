@@ -383,6 +383,11 @@ tbody tr:hover td{background:var(--hover)}
 .mini-lin .mini{flex:1;min-width:0}
 .mini-lin .baixar{position:static;width:42px;height:auto;border-radius:10px;background:var(--card);color:var(--fg-2);border:1px solid var(--line)}
 .mini-lin .baixar:hover{background:var(--blue);color:#fff}
+.acoes{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between}
+.acoes h4{margin:0}
+.zip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:#fff;background:var(--blue);border-radius:10px;padding:7px 12px;text-decoration:none}
+.zip:hover{filter:brightness(1.08)}
+.zip:focus-visible{outline:2px solid var(--blue-2);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -848,6 +853,16 @@ function botaoBaixar(item, quem) {
   });
   return b;
 }
+function botaoZip(itens, rotulo, nomeZip) {
+  const com = itens.filter(([c]) => c.video_local);
+  if (!com.length) return null;
+  const base = location.protocol.startsWith('http') ? '/' : 'http://127.0.0.1:47830/';
+  const nomes = com.map(([c, quem]) => ('Concorrente - ' + (quem || '') + ' - ' + c.id + '.mp4').replace(/[\\/:*?"<>|]/g, ''));
+  const a = document.createElement('a'); a.className = 'zip';
+  a.href = base + 'zip?cliente=' + encodeURIComponent(atual) + '&ids=' + com.map(([c]) => c.id).join(',') + '&nomes=' + encodeURIComponent(nomes.join('|')) + '&nome=' + encodeURIComponent(nomeZip);
+  a.innerHTML = ICO_BAIXAR; a.append(document.createTextNode(' ' + rotulo + ' (' + com.length + (com.length > 1 ? ' vídeos' : ' vídeo') + ', .zip)'));
+  return a;
+}
 function campeao(c, quem) {
   const t = el('div', 'camp');
   const tela = el('button', 'camp-tela' + (c.miniatura ? ' com-mini' : '')); tela.setAttribute('aria-label', 'Assistir: ' + c.titulo);
@@ -881,7 +896,9 @@ function desenharConcorrentes() {
     (chefe.ganchos || []).forEach((g) => gs.append(el('span', 'gancho', g)));
     const cs = el('div', 'camps'); chefe.campeoes.forEach((c) => { const x = campeao(c); x.querySelector('.baixar')?.replaceWith(botaoBaixar(c, chefe.anunciante)); cs.append(x); });
     const ver = el('a', 'link', 'Ver todos os anúncios dele na Biblioteca ↗'); ver.href = chefe.pagina_biblioteca; ver.target = '_blank'; ver.rel = 'noopener';
-    h.append(cab, pq, gs, el('h4', null, 'Criativos campeões'), cs, ver);
+    const zc = botaoZip(chefe.campeoes.map((c) => [c, chefe.anunciante]), 'Baixar todos de ' + chefe.anunciante, 'Concorrente - ' + chefe.anunciante + '.zip');
+    const rod = el('div', 'acoes'); rod.append(ver); if (zc) rod.append(zc);
+    h.append(cab, pq, gs, el('h4', null, 'Criativos campeões'), cs, rod);
     wrap.append(h);
   }
   const outros = pr.filter((p) => p !== chefe);
@@ -900,7 +917,9 @@ function desenharConcorrentes() {
         r.append(tx); r.addEventListener('click', () => player(cp.link)); const lin = el('div', 'mini-lin'); lin.append(r, botaoBaixar(cp, p.anunciante)); lst.append(lin);
       });
       const ver = el('a', 'link', 'Todos os anúncios ↗'); ver.href = p.pagina_biblioteca; ver.target = '_blank'; ver.rel = 'noopener';
-      c.append(cab, el('p', 'top-pq', p.porque), lst, ver);
+      const zp = botaoZip(p.campeoes.map((x) => [x, p.anunciante]), 'Baixar todos', 'Concorrente - ' + p.anunciante + '.zip');
+      const rod = el('div', 'acoes'); rod.append(ver); if (zp) rod.append(zp);
+      c.append(cab, el('p', 'top-pq', p.porque), lst, rod);
       g.append(c);
     });
     sec.append(g); wrap.append(sec);
@@ -923,7 +942,8 @@ function desenharConcorrentes() {
   const todos = [];
   pr.forEach((p) => p.campeoes.forEach((c) => todos.push([c, p])));
   if (todos.length) {
-    const sec = el('div'); sec.append(el('h4', null, 'Todos os criativos campeões, do que está há mais tempo no ar'));
+    const sec = el('div'); const hh = el('div', 'acoes'); hh.append(el('h4', null, 'Todos os criativos campeões, do que está há mais tempo no ar'));
+    const zt = botaoZip(todos.map(([c, p]) => [c, p.anunciante]), 'Baixar todos os campeões', 'Criativos campeões - ' + atual + '.zip'); if (zt) hh.append(zt); sec.append(hh);
     const g = el('div', 'camps camps-grade');
     todos.sort((a, b) => b[0].dias - a[0].dias).forEach(([c, p]) => g.append(campeao(c, p)));
     sec.append(g); wrap.append(sec);
