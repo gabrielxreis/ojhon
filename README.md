@@ -151,7 +151,7 @@ python3 ~/.claude/skills/ojhon/painel/painel.py --cliente <cliente>
 | **Parecer** | o que está bom, o que está ruim, o que fazer primeiro e o que falta você responder |
 | **Verba** | calculadora: preço, custo por venda alvo, vendas por semana e taxa viram verba por semana e por mês, retorno, sobra e ponto de empate, com cenários |
 | **Testes** | os criativos em teste, com gancho, ângulo e status |
-| **Concorrentes** | o que a concorrência anuncia agora, resumo por anunciante, há quantos dias cada anúncio está no ar e o **player**: o botão ▶ abre o vídeo direto da Biblioteca de Anúncios do Meta, sem baixar nada |
+| **Concorrentes** | o **principal concorrente** em destaque e os outros 4 principais com foto, quantos anúncios ativos cada um tem, os ganchos que usam, os **criativos campeões** (os que estão há mais tempo no ar) e os demais em lista; o botão ▶ abre o vídeo direto da Biblioteca de Anúncios do Meta, sem baixar nada |
 
 - **Sempre em dia:** todo comando do /ojhon atualiza o painel; a aba aberta se atualiza sozinha em poucos segundos, sem abrir aba nova.
 - **Vários clientes:** o seletor do topo troca de cliente.

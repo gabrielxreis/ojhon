@@ -312,6 +312,63 @@ tbody tr:hover td{background:var(--hover)}
 .anuncio .link{font-size:12.5px;color:var(--blue);text-decoration:none}
 .anuncio .link:hover{text-decoration:underline}
 .aviso{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));background:var(--blue);color:#fff;padding:10px 14px;border-radius:10px;box-shadow:var(--pop);font-size:13px;font-weight:500;z-index:80}
+.cav{border-radius:50%;overflow:hidden;flex:none;display:grid;place-items:center;background:linear-gradient(140deg,#2F6BFF,#1B2B8F);color:#fff;font-weight:700;font-size:14px;border:2px solid var(--card);box-shadow:0 0 0 1px var(--line)}
+.cav img{width:100%;height:100%;object-fit:cover;display:block}
+.chefe{border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:14px;background:linear-gradient(135deg,var(--blue-soft),var(--card) 55%)}
+.chefe-cab{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.chefe-cab .cav{font-size:22px}
+.chefe-id{display:grid;gap:2px;min-width:0}
+.chefe-id h3{margin:0;font-size:24px;font-weight:700;letter-spacing:-.02em}
+.chefe-id small{color:var(--muted)}
+.selo{justify-self:start;background:var(--blue);color:#fff;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:99px}
+.chefe-nums{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+.chefe-nums div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:grid;min-width:96px}
+.chefe-nums b{font-size:24px;font-weight:700;letter-spacing:-.02em}
+.chefe-nums span{font-size:12px;color:var(--muted)}
+.chefe-pq{margin:0;line-height:1.5;color:var(--fg-2);max-width:80ch}
+.ganchos{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ganchos .rot{font-size:12px;color:var(--muted);margin-right:4px}
+.gancho{font-size:12.5px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:5px 11px;color:var(--fg)}
+.conc h4{margin:0 0 10px;font-size:15px;font-weight:600}
+.camps{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:12px}
+.camps-grade{grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr))}
+.camp{display:grid;gap:8px;align-content:start}
+.camp-tela{all:unset;cursor:pointer;aspect-ratio:9/14;border-radius:12px;background:linear-gradient(160deg,#1B2B8F,#060A14);display:grid;place-items:center;position:relative;overflow:hidden;color:#fff}
+.camp-tela::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 18%,rgba(92,141,255,.38),transparent 62%)}
+.camp-tela:hover .play,.camp-tela:focus-visible .play{transform:scale(1.08);background:var(--blue)}
+.camp-tela:focus-visible{outline:2px solid var(--blue-2);outline-offset:2px}
+.camp-dias{position:absolute;left:10px;bottom:10px;z-index:1;font-size:11.5px;font-weight:600;background:rgba(0,0,0,.45);padding:3px 8px;border-radius:99px}
+.camp-av{position:absolute!important;top:10px;left:10px;z-index:1}
+.camp-txt{display:grid;gap:3px}
+.camp-txt b{font-size:13.5px;font-weight:600;line-height:1.35}
+.camp-txt small{font-size:12px;color:var(--muted);line-height:1.4}
+.tops{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
+.top{border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;align-content:start}
+.top-cab{display:flex;align-items:center;gap:12px}
+.top-cab b{display:block;font-size:16px}
+.top-cab small{color:var(--muted);font-size:12px}
+.rank{font-size:13px;font-weight:700;color:var(--blue);min-width:24px}
+.top-pq{margin:0;font-size:13px;color:var(--fg-2);line-height:1.45}
+.top-camps{display:grid;gap:8px}
+.mini{all:unset;cursor:pointer;display:flex;gap:10px;align-items:center;padding:8px;border-radius:10px;border:1px solid var(--line)}
+.mini:hover{background:var(--hover)}
+.mini:focus-visible{outline:2px solid var(--blue-2)}
+.mini-play{all:unset;cursor:pointer;width:34px;height:34px;border-radius:9px;background:linear-gradient(160deg,#1B2B8F,#060A14);color:#fff;display:grid;place-items:center;font-size:12px;flex:none}
+.mini-play:disabled{opacity:.4;cursor:default}
+.mini-tx{display:grid;min-width:0}
+.mini-tx b{font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini-tx small{font-size:11.5px;color:var(--muted)}
+.ranking{display:grid;gap:10px;border:1px solid var(--line);border-radius:14px;padding:16px}
+.ranking h4{margin:0}
+.lista-conc{display:grid;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.lc{display:grid;grid-template-columns:auto minmax(150px,220px) 1fr;gap:12px;align-items:center;padding:10px 12px;border-top:1px solid var(--line-2)}
+.lc:first-child{border-top:0}
+.lc b{display:block;font-size:13.5px}
+.lc small{font-size:11.5px;color:var(--muted)}
+.lc-leitura{font-size:12.5px;color:var(--fg-2);line-height:1.4}
+.det summary{cursor:pointer;font-weight:600;font-size:14px;padding:6px 0}
+.det .testes{margin-top:10px}
+@media (max-width:767px){.chefe-nums{margin-left:0}.lc{grid-template-columns:auto 1fr}.lc-leitura{grid-column:1/-1}}
 </style>
 </head>
 <body>
@@ -476,7 +533,7 @@ tbody tr:hover td{background:var(--hover)}
       <section data-sec="concorrentes" data-so="1">
         <div class="grid"><article class="card">
           <h2>Concorrentes</h2>
-          <p class="sub">Anúncios ativos da concorrência na Biblioteca de Anúncios do Meta (Brasil). Clique em ▶ para assistir direto do site do Meta, sem baixar.</p>
+          <p class="sub">Quem mais anuncia no seu mercado agora e os criativos que estão há mais tempo no ar. Clique em ▶ para assistir direto da Biblioteca de Anúncios do Meta, sem baixar.</p>
           <div id="concorrentes" style="margin-top:14px"></div>
         </article></div>
       </section>
@@ -748,51 +805,122 @@ function player(link) {
   const w = window.open(link, 'jhon-player', 'popup,width=540,height=920');
   if (!w) window.open(link, '_blank');
 }
+function avatar(p, tam) {
+  const box = el('span', 'cav'); box.style.width = box.style.height = tam + 'px';
+  const ini = el('span', 'cav-ini', (p.anunciante || '?').split(/\s+/).map((x) => x[0]).join('').slice(0, 2).toUpperCase());
+  box.append(ini);
+  if (p.foto) {
+    const im = new Image(); im.alt = ''; im.referrerPolicy = 'no-referrer'; im.loading = 'lazy';
+    im.onload = () => { box.replaceChildren(im); }; im.src = p.foto;
+  }
+  return box;
+}
+function campeao(c, quem) {
+  const t = el('div', 'camp');
+  const tela = el('button', 'camp-tela'); tela.setAttribute('aria-label', 'Assistir: ' + c.titulo);
+  tela.append(el('span', 'play', '▶'));
+  if (quem) { const av = avatar(quem, 28); av.classList.add('camp-av'); tela.append(av); }
+  tela.append(el('span', 'camp-dias', c.dias + ' dias no ar'));
+  tela.addEventListener('click', () => player(c.link));
+  const txt = el('div', 'camp-txt');
+  txt.append(el('b', null, c.titulo), el('small', null, (quem ? quem.anunciante + ' · ' : '') + 'desde ' + c.desde.split('-').reverse().join('/') + ' · ' + c.motivo));
+  t.append(tela, txt);
+  return t;
+}
 function desenharConcorrentes() {
   const d = DADOS[atual]; const co = $('#concorrentes'); co.replaceChildren();
-  const ads = d.concorrentes || [];
-  if (!ads.length) { co.append(vazio('Ainda sem leitura de concorrentes. Peça ao Jhon e ele puxa os anúncios ativos deles.', '/ojhon concorrente ' + atual)); return; }
+  const pr = d.concorrentes_principais || [], ads = d.concorrentes || [];
+  if (!pr.length && !ads.length) { co.append(vazio('Ainda sem leitura de concorrentes. Peça ao Jhon e ele puxa os anúncios ativos deles.', '/ojhon concorrente ' + atual)); return; }
   const wrap = el('div', 'conc');
+  const chefe = pr.find((p) => p.principal) || pr[0];
+  if (chefe) {
+    const h = el('article', 'chefe');
+    const cab = el('div', 'chefe-cab');
+    const id = el('div', 'chefe-id'); id.append(el('span', 'selo', 'Principal concorrente'), el('h3', null, chefe.anunciante), el('small', null, chefe.categoria));
+    const nums = el('div', 'chefe-nums');
+    const n = (v, r) => { const x = el('div'); x.append(el('b', null, v), el('span', null, r)); return x; };
+    nums.append(n(chefe.anuncios_ativos, 'anúncios ativos'), n(diasNoAr(chefe.mais_antigo, d.atualizado), 'dias do mais antigo'), n(chefe.campeoes.length, 'campeões'));
+    cab.append(avatar(chefe, 76), id, nums);
+    const pq = el('p', 'chefe-pq', chefe.porque);
+    const gs = el('div', 'ganchos'); gs.append(el('span', 'rot', 'Ganchos que ele usa'));
+    (chefe.ganchos || []).forEach((g) => gs.append(el('span', 'gancho', g)));
+    const cs = el('div', 'camps'); chefe.campeoes.forEach((c) => cs.append(campeao(c)));
+    const ver = el('a', 'link', 'Ver todos os anúncios dele na Biblioteca ↗'); ver.href = chefe.pagina_biblioteca; ver.target = '_blank'; ver.rel = 'noopener';
+    h.append(cab, pq, gs, el('h4', null, 'Criativos campeões'), cs, ver);
+    wrap.append(h);
+  }
+  const outros = pr.filter((p) => p !== chefe);
+  if (outros.length) {
+    const sec = el('div'); sec.append(el('h4', null, 'Os outros principais'));
+    const g = el('div', 'tops');
+    outros.forEach((p, i) => {
+      const c = el('article', 'top');
+      const cab = el('div', 'top-cab');
+      const nm = el('div'); nm.append(el('b', null, p.anunciante), el('small', null, p.categoria + ' · ' + p.anuncios_ativos + ' anúncios ativos'));
+      cab.append(el('span', 'rank', '#' + (i + 2)), avatar(p, 48), nm);
+      const lst = el('div', 'top-camps');
+      p.campeoes.slice(0, 2).forEach((cp) => {
+        const r = el('button', 'mini'); r.append(el('span', 'mini-play', '▶'));
+        const tx = el('span', 'mini-tx'); tx.append(el('b', null, cp.titulo), el('small', null, cp.dias + ' dias no ar · ' + cp.motivo));
+        r.append(tx); r.addEventListener('click', () => player(cp.link)); lst.append(r);
+      });
+      const ver = el('a', 'link', 'Todos os anúncios ↗'); ver.href = p.pagina_biblioteca; ver.target = '_blank'; ver.rel = 'noopener';
+      c.append(cab, el('p', 'top-pq', p.porque), lst, ver);
+      g.append(c);
+    });
+    sec.append(g); wrap.append(sec);
+  }
+  if (pr.length) {
+    const sec = el('div', 'ranking'); sec.append(el('h4', null, 'Quem mais anuncia agora'));
+    const mx = d3.max(pr, (p) => p.anuncios_ativos) || 1;
+    pr.slice().sort((a, b) => b.anuncios_ativos - a.anuncios_ativos).forEach((p) => {
+      const row = el('div', 'dist-row'); const top = el('div', 'dist-top');
+      top.append(el('b', null, p.anunciante), el('span', null, p.anuncios_ativos + ' anúncios ativos'));
+      const tr = el('div', 'track'); const sp = el('span'); sp.style.width = (p.anuncios_ativos / mx * 100) + '%'; sp.style.background = p === chefe ? 'var(--blue)' : 'var(--blue-3)'; tr.append(sp);
+      row.append(top, tr); sec.append(row);
+    });
+    wrap.append(sec);
+  }
   if ((d.concorrentes_insights || []).length) {
     const ins = el('div', 'conc-ins'); ins.append(el('h3', null, 'O que a concorrência mostra'));
     const ul = el('ul'); d.concorrentes_insights.forEach((t) => ul.append(el('li', null, t))); ins.append(ul); wrap.append(ins);
   }
-  const chips = el('div', 'chips');
-  const nomes = [...new Set(ads.map((x) => x.anunciante))];
-  [''].concat(nomes).forEach((n) => {
-    const c = el('button', 'chip' + (concFiltro === n ? ' on' : ''), n || 'Todos (' + nomes.length + ')');
-    c.addEventListener('click', () => { concFiltro = n; desenharConcorrentes(); });
-    chips.append(c);
-  });
-  wrap.append(chips);
-  const res = (d.concorrentes_resumo || []).filter((r) => !concFiltro || r.anunciante === concFiltro);
-  if (res.length) {
-    const tw = el('div', 'twrap'); const tb = el('table'); const th = el('thead'); const hr = el('tr');
-    ['Anunciante', 'Tipo', 'Anúncios lidos', 'No ar desde', 'Leitura do Jhon'].forEach((t, i) => { const h = el('th', i === 2 ? 'num' : null, t); h.style.cursor = 'default'; hr.append(h); });
-    th.append(hr); const bd = el('tbody');
-    res.forEach((r) => {
-      const tr = el('tr'); tr.addEventListener('click', () => { concFiltro = concFiltro === r.anunciante ? '' : r.anunciante; desenharConcorrentes(); });
-      const dias = diasNoAr(r.desde, d.atualizado);
-      tr.append(el('td', 'name', r.anunciante), el('td', null, r.categoria), el('td', 'num', r.anuncios_lidos), el('td', null, r.desde.split('-').reverse().join('/') + ' (' + dias + ' dias)'), el('td', 'why', r.leitura));
-      bd.append(tr);
-    });
-    tb.append(th, bd); tw.append(tb); wrap.append(tw);
+  const todos = [];
+  pr.forEach((p) => p.campeoes.forEach((c) => todos.push([c, p])));
+  if (todos.length) {
+    const sec = el('div'); sec.append(el('h4', null, 'Todos os criativos campeões, do que está há mais tempo no ar'));
+    const g = el('div', 'camps camps-grade');
+    todos.sort((a, b) => b[0].dias - a[0].dias).forEach(([c, p]) => g.append(campeao(c, p)));
+    sec.append(g); wrap.append(sec);
   }
-  const grade = el('div', 'testes');
-  ads.filter((x) => !concFiltro || x.anunciante === concFiltro).forEach((a) => {
-    const c = el('div', 'teste anuncio');
-    const top = el('div', 'teste-top'); top.append(el('b', null, a.anunciante));
-    const dias = diasNoAr(a.desde, d.atualizado);
-    const pill = el('span', 'pill', dias >= 60 ? dias + ' dias no ar' : dias + ' dias'); pill.dataset.p = dias >= 60 ? 'bom' : 'atenção'; top.append(pill);
-    const tela = el('button', 'tela'); tela.setAttribute('aria-label', 'Assistir o anúncio de ' + a.anunciante);
-    tela.append(el('span', 'play', '▶'), el('small', null, 'Assistir na Biblioteca'));
-    tela.addEventListener('click', () => player(a.link));
-    const meta = [a.categoria, a.versoes > 1 ? a.versoes + ' anúncios no mesmo criativo' : null, 'ID ' + a.id].filter(Boolean).join(' · ');
-    const lk = el('a', 'link', 'Abrir na Biblioteca de Anúncios ↗'); lk.href = a.link; lk.target = '_blank'; lk.rel = 'noopener';
-    c.append(top, tela, el('q', null, a.texto), el('small', null, meta), lk);
-    grade.append(c);
-  });
-  wrap.append(grade);
+  const res = d.concorrentes_resumo || [];
+  if (res.length) {
+    const sec = el('div'); sec.append(el('h4', null, 'Outros concorrentes'));
+    const ul = el('div', 'lista-conc');
+    res.forEach((r) => {
+      const li = el('div', 'lc');
+      const nm = el('div'); nm.append(el('b', null, r.anunciante), el('small', null, r.categoria + ' · no ar desde ' + r.desde.split('-').reverse().join('/')));
+      const ad = ads.find((x) => x.anunciante === r.anunciante);
+      const bt = el('button', 'mini-play'); bt.textContent = '▶'; bt.setAttribute('aria-label', 'Assistir anúncio de ' + r.anunciante);
+      if (ad) bt.addEventListener('click', () => player(ad.link)); else bt.disabled = true;
+      li.append(bt, nm, el('span', 'lc-leitura', r.leitura));
+      ul.append(li);
+    });
+    sec.append(ul); wrap.append(sec);
+  }
+  if (ads.length) {
+    const det = el('details', 'det'); det.append(el('summary', null, 'Todos os anúncios lidos um a um (' + ads.length + ')'));
+    const grade = el('div', 'testes');
+    ads.forEach((a) => {
+      const c = el('div', 'teste anuncio');
+      const top = el('div', 'teste-top'); top.append(el('b', null, a.anunciante));
+      const dd = diasNoAr(a.desde, d.atualizado); const pill = el('span', 'pill', dd + ' dias'); pill.dataset.p = dd >= 60 ? 'bom' : 'atenção'; top.append(pill);
+      const tela = el('button', 'tela'); tela.append(el('span', 'play', '▶'), el('small', null, 'Assistir na Biblioteca')); tela.addEventListener('click', () => player(a.link));
+      c.append(top, tela, el('q', null, a.texto), el('small', null, a.categoria + ' · ID ' + a.id));
+      grade.append(c);
+    });
+    det.append(grade); wrap.append(det);
+  }
   if (d.concorrentes_fonte) wrap.append(el('p', 'map-note', d.concorrentes_fonte));
   co.append(wrap);
 }
