@@ -1,28 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="220" viewBox="0 0 900 220">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0d1117"/>
-      <stop offset="1" stop-color="#132b24"/>
-    </linearGradient>
-    <linearGradient id="tx" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#2fd38a"/>
-      <stop offset="1" stop-color="#9df0c4"/>
-    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#060A14"/><stop offset="1" stop-color="#111A2E"/></linearGradient>
+    <linearGradient id="tx" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9DBBFF"/><stop offset="1" stop-color="#2F6BFF"/></linearGradient>
+    <linearGradient id="jb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5C8DFF"/><stop offset="1" stop-color="#1E3FD8"/></linearGradient>
   </defs>
   <rect width="900" height="220" rx="18" fill="url(#bg)"/>
-  <g fill="none" stroke="#24463a" stroke-width="2">
-    <rect x="40" y="60" width="72" height="100" rx="10"/>
+  <g transform="translate(40 62) scale(1.5)">
+    <rect width="64" height="64" rx="16" fill="url(#jb)"/>
+    <rect x="14" y="36" width="8" height="14" rx="2.5" fill="#FFFFFF" opacity=".55"/>
+    <rect x="28" y="28" width="8" height="22" rx="2.5" fill="#FFFFFF" opacity=".78"/>
+    <rect x="42" y="18" width="8" height="32" rx="2.5" fill="#FFFFFF"/>
+    <path d="M13 30 L27 21 L35 25 L48 13" fill="none" stroke="#9DBBFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M42 12.5 L49 12.3 L48.6 19" fill="none" stroke="#9DBBFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
-  <g fill="#2fd38a">
-    <rect x="52" y="122" width="12" height="26" rx="2"/>
-    <rect x="70" y="104" width="12" height="44" rx="2"/>
-    <rect x="88" y="84" width="12" height="64" rx="2"/>
-  </g>
-  <text x="140" y="128" font-family="Poppins, Inter, Helvetica, Arial, sans-serif" font-size="92" font-weight="800" fill="url(#tx)">/ojhon</text>
-  <text x="142" y="168" font-family="Poppins, Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#c9d1d9">o gestor de tráfego com IA</text>
-  <g font-family="Menlo, monospace" font-size="15" fill="#6e7681">
-    <text x="590" y="62">auditoria › plano › verba</text>
-    <text x="590" y="86">criativo › teste › rastreio</text>
-    <text x="590" y="110">relatório › ponte com o /ogab</text>
+  <text x="160" y="128" font-family="'Inter Tight', Inter, Helvetica, Arial, sans-serif" font-size="92" font-weight="800" letter-spacing="-2" fill="url(#tx)">/ojhon</text>
+  <text x="163" y="168" font-family="'Inter Tight', Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="500" fill="#C9D3E6">o gestor de tráfego com IA</text>
+  <g font-family="Menlo, monospace" font-size="15" fill="#5E6B85">
+    <text x="600" y="62">leitura › auditoria › plano</text>
+    <text x="600" y="86">criativo › teste › painel</text>
+    <text x="600" y="110">nada sobe sem o seu "pode"</text>
   </g>
 </svg>
