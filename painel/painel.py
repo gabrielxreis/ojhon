@@ -48,6 +48,20 @@ def subir_servidor():
     return False
 
 
+def marcar_videos(nome, d):
+    """Liga o botão de baixar a todo vídeo de concorrente que já está em clientes/<nome>/criativos_concorrentes/."""
+    pasta = os.path.join(CLIENTES, nome, "criativos_concorrentes")
+    tem = set()
+    if os.path.isdir(pasta):
+        tem = {f[len("concorrente_"):-4] for f in os.listdir(pasta) if f.startswith("concorrente_") and f.endswith(".mp4")}
+    itens = [c for p in d.get("concorrentes_principais", []) for c in p.get("campeoes", [])] + d.get("concorrentes", [])
+    for c in itens:
+        if str(c.get("id")) in tem:
+            c["video_local"] = f"../clientes/{nome}/criativos_concorrentes/concorrente_{c['id']}.mp4"
+        else:
+            c.pop("video_local", None)
+
+
 def carregar():
     dados, erros = {}, []
     if not os.path.isdir(CLIENTES):
@@ -62,6 +76,7 @@ def carregar():
         except Exception as e:  # noqa: BLE001
             erros.append(f"{nome}: painel.json inválido ({e})")
             continue
+        marcar_videos(nome, d)
         falta = [k for k in OBRIGATORIOS if k not in d]
         if falta:
             erros.append(f"{nome}: falta {', '.join(falta)}")

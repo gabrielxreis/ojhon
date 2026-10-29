@@ -8,6 +8,7 @@ Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` segu
 - **Botão de baixar:** ícone ⬇ em cada criativo da concorrência; com o vídeo já baixado pelo Jhon, salva direto em Downloads; sem ele, copia o pedido para o Jhon baixar.
 - **Corrigido:** o botão Exportar esticava a barra do topo inteira.
 - **Baixar todos (.zip):** cada concorrente principal e a lista de campeões têm um botão que baixa todos os vídeos num arquivo só (o Chrome segura vários downloads seguidos de um mesmo site).
+- **Baixar o criativo pedido:** o Jhon traz o vídeo da Biblioteca do Meta direto para a pasta do cliente (sem passar pelo bloqueio de downloads do Chrome) e o ⬇ dele passa a salvar na hora.
 - **Baixar de verdade:** o painel agora abre por um servidor local (127.0.0.1) e o ⬇ salva o vídeo em vez de abrir numa janela.
 
 ## 2026.10.29-5 (29/10/2026)

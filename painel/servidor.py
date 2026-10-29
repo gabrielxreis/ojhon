@@ -30,6 +30,34 @@ class Painel(SimpleHTTPRequestHandler):
             return self.zipar(parse_qs(u.query))
         return super().do_GET()
 
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.cors()
+        self.end_headers()
+
+    def cors(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Private-Network", "true")
+
+    def do_POST(self):
+        """/receber?cliente=<pasta>&id=<id do anúncio>: grava o vídeo do criativo pedido (corpo = mp4) em criativos_concorrentes/."""
+        u = urlparse(self.path)
+        q = parse_qs(u.query)
+        cliente = re.sub(r"[^A-Za-z0-9_-]", "", (q.get("cliente") or [""])[0])
+        ida = (q.get("id") or [""])[0]
+        n = int(self.headers.get("Content-Length") or 0)
+        if u.path != "/receber" or not cliente or not ida.isdigit() or not (0 < n < 300 * 1024 * 1024):
+            self.send_response(400); self.cors(); self.end_headers(); return
+        pasta = os.path.join(SKILL, "clientes", cliente, "criativos_concorrentes")
+        os.makedirs(pasta, exist_ok=True)
+        dados = self.rfile.read(n)
+        with open(os.path.join(pasta, f"concorrente_{ida}.mp4"), "wb") as f:
+            f.write(dados)
+        self.send_response(200); self.cors(); self.end_headers()
+        self.wfile.write(b"ok")
+
     def zipar(self, q):
         """/zip?cliente=<pasta>&ids=1,2,3&nome=<arquivo.zip>: junta os vídeos baixados num zip só (um download)."""
         cliente = re.sub(r"[^A-Za-z0-9_-]", "", (q.get("cliente") or [""])[0])
