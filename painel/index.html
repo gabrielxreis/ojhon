@@ -343,7 +343,7 @@ tbody tr:hover td{background:var(--hover)}
 .camp-txt b{font-size:13.5px;font-weight:600;line-height:1.35}
 .camp-txt small{font-size:12px;color:var(--muted);line-height:1.4}
 .tops{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
-.top{border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;align-content:start}
+.ptop{border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;align-content:start}
 .top-cab{display:flex;align-items:center;gap:12px}
 .top-cab b{display:block;font-size:16px}
 .top-cab small{color:var(--muted);font-size:12px}
@@ -373,6 +373,16 @@ tbody tr:hover td{background:var(--hover)}
 .camp-tela.com-mini::after,.anuncio .tela.com-mini::after{background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.55))}
 .camp-tela.com-mini .play,.anuncio .tela.com-mini .play{background:rgba(0,0,0,.45);backdrop-filter:blur(2px)}
 .mini-play.com-mini{width:40px;height:56px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.camp,.anuncio{position:relative}
+.baixar{position:absolute;top:8px;right:8px;z-index:3;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(6,10,20,.62);color:#fff;border:1px solid rgba(255,255,255,.25);cursor:pointer;text-decoration:none;backdrop-filter:blur(4px);transition:background .15s,transform .15s}
+.baixar:hover,.baixar:focus-visible{background:var(--blue);transform:translateY(-1px);outline:none}
+.baixar.pendente{opacity:.75;border-style:dashed}
+.baixar.ok{background:var(--ok)}
+.anuncio .baixar{top:auto;bottom:14px;right:14px;background:var(--blue)}
+.mini-lin{display:flex;gap:8px;align-items:stretch}
+.mini-lin .mini{flex:1;min-width:0}
+.mini-lin .baixar{position:static;width:42px;height:auto;border-radius:10px;background:var(--card);color:var(--fg-2);border:1px solid var(--line)}
+.mini-lin .baixar:hover{background:var(--blue);color:#fff}
 </style>
 </head>
 <body>
@@ -819,6 +829,24 @@ function avatar(p, tam) {
   }
   return box;
 }
+const ICO_BAIXAR = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>';
+function botaoBaixar(item, quem) {
+  const nome = ('Concorrente - ' + (quem || item.anunciante || '') + ' - ' + item.id + '.mp4').replace(/[\\/:*?"<>|]/g, '');
+  if (item.video_local) {
+    const a = document.createElement('a'); a.className = 'baixar'; a.href = item.video_local; a.download = nome;
+    a.title = 'Baixar este vídeo'; a.setAttribute('aria-label', 'Baixar o vídeo ' + nome); a.innerHTML = ICO_BAIXAR;
+    a.addEventListener('click', (e) => e.stopPropagation());
+    return a;
+  }
+  const b = document.createElement('button'); b.className = 'baixar pendente'; b.innerHTML = ICO_BAIXAR;
+  b.title = 'Vídeo ainda não baixado: clique para copiar o pedido ao Jhon'; b.setAttribute('aria-label', 'Pedir ao Jhon para baixar este vídeo');
+  b.addEventListener('click', (e) => {
+    e.stopPropagation(); const cmd = '/ojhon baixar o criativo ' + item.id + ' de ' + atual;
+    const ok = () => { b.title = 'Copiado: cole no Claude'; b.classList.add('ok'); setTimeout(() => b.classList.remove('ok'), 1600); };
+    navigator.clipboard ? navigator.clipboard.writeText(cmd).then(ok, ok) : ok();
+  });
+  return b;
+}
 function campeao(c, quem) {
   const t = el('div', 'camp');
   const tela = el('button', 'camp-tela' + (c.miniatura ? ' com-mini' : '')); tela.setAttribute('aria-label', 'Assistir: ' + c.titulo);
@@ -828,6 +856,7 @@ function campeao(c, quem) {
   tela.append(el('span', 'camp-dias', c.dias + ' dias no ar'));
   tela.addEventListener('click', () => player(c.link));
   const txt = el('div', 'camp-txt');
+  t.append(botaoBaixar(c, quem ? quem.anunciante : null));
   txt.append(el('b', null, c.titulo), el('small', null, (quem ? quem.anunciante + ' · ' : '') + 'desde ' + c.desde.split('-').reverse().join('/') + ' · ' + c.motivo));
   t.append(tela, txt);
   return t;
@@ -859,7 +888,7 @@ function desenharConcorrentes() {
     const sec = el('div'); sec.append(el('h4', null, 'Os outros principais'));
     const g = el('div', 'tops');
     outros.forEach((p, i) => {
-      const c = el('article', 'top');
+      const c = el('article', 'ptop');
       const cab = el('div', 'top-cab');
       const nm = el('div'); nm.append(el('b', null, p.anunciante), el('small', null, p.categoria + ' · ' + p.anuncios_ativos + ' anúncios ativos'));
       cab.append(el('span', 'rank', '#' + (i + 2)), avatar(p, 48), nm);
@@ -867,7 +896,7 @@ function desenharConcorrentes() {
       p.campeoes.slice(0, 2).forEach((cp) => {
         const r = el('button', 'mini'); const mp = el('span', 'mini-play' + (cp.miniatura ? ' com-mini' : ''), '▶'); if (cp.miniatura) mp.style.backgroundImage = 'url("' + cp.miniatura + '")'; r.append(mp);
         const tx = el('span', 'mini-tx'); tx.append(el('b', null, cp.titulo), el('small', null, cp.dias + ' dias no ar · ' + cp.motivo));
-        r.append(tx); r.addEventListener('click', () => player(cp.link)); lst.append(r);
+        r.append(tx); r.addEventListener('click', () => player(cp.link)); const lin = el('div', 'mini-lin'); lin.append(r, botaoBaixar(cp, p.anunciante)); lst.append(lin);
       });
       const ver = el('a', 'link', 'Todos os anúncios ↗'); ver.href = p.pagina_biblioteca; ver.target = '_blank'; ver.rel = 'noopener';
       c.append(cab, el('p', 'top-pq', p.porque), lst, ver);
@@ -921,7 +950,7 @@ function desenharConcorrentes() {
       const top = el('div', 'teste-top'); top.append(el('b', null, a.anunciante));
       const dd = diasNoAr(a.desde, d.atualizado); const pill = el('span', 'pill', dd + ' dias'); pill.dataset.p = dd >= 60 ? 'bom' : 'atenção'; top.append(pill);
       const tela = el('button', 'tela' + (a.miniatura ? ' com-mini' : '')); if (a.miniatura) tela.style.backgroundImage = 'url("' + a.miniatura + '")'; tela.append(el('span', 'play', '▶'), el('small', null, 'Assistir na Biblioteca')); tela.addEventListener('click', () => player(a.link));
-      c.append(top, tela, el('q', null, a.texto), el('small', null, a.categoria + ' · ID ' + a.id));
+      c.append(top, tela, el('q', null, a.texto), el('small', null, a.categoria + ' · ID ' + a.id), botaoBaixar(a));
       grade.append(c);
     });
     det.append(grade); wrap.append(det);
