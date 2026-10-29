@@ -2,14 +2,17 @@
 """Painel do Jhon: junta clientes/*/painel.json em painel/dados.js e abre o painel no navegador.
 
 Uso:
-  python3 ~/.claude/skills/ojhon/painel/painel.py --cliente xtrader      # gera e abre no cliente
+  python3 ~/.claude/skills/ojhon/painel/painel.py --cliente xtrader      # atualiza; abre só se não abriu nas últimas 6 h
+  python3 ~/.claude/skills/ojhon/painel/painel.py --cliente xtrader --abrir   # força abrir uma aba
   python3 ~/.claude/skills/ojhon/painel/painel.py --cliente xtrader --nao-abrir
   python3 ~/.claude/skills/ojhon/painel/painel.py --checar                # só valida os painel.json
 
 O formato do painel.json está em painel/LEIA.md. dados.js e os painel.json ficam fora do git.
 """
 import argparse
+import hashlib
 import json
+import time
 import os
 import subprocess
 import sys
@@ -57,6 +60,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--cliente", help="pasta do cliente em clientes/ que abre primeiro")
     ap.add_argument("--nao-abrir", action="store_true", help="só gera o dados.js")
+    ap.add_argument("--abrir", action="store_true", help="abre uma aba mesmo que já tenha aberto há pouco")
     ap.add_argument("--checar", action="store_true", help="só valida os painel.json")
     a = ap.parse_args()
 
@@ -73,15 +77,24 @@ def main():
     if a.cliente and a.cliente not in dados:
         print(f"AVISO: {a.cliente} sem painel.json; abrindo {atual}")
 
-    js = "window.JHON_DADOS = " + json.dumps(dados, ensure_ascii=False) + ";\nwindow.JHON_ATUAL = " + json.dumps(atual) + ";\n"
+    corpo = json.dumps(dados, ensure_ascii=False, sort_keys=True)
+    versao = hashlib.sha1((corpo + atual).encode("utf-8")).hexdigest()[:12]
+    js = ("window.JHON_DADOS = " + corpo + ";\nwindow.JHON_ATUAL = " + json.dumps(atual)
+          + ";\nwindow.JHON_VERSAO = " + json.dumps(versao) + ";\n")
     with open(os.path.join(AQUI, "dados.js"), "w", encoding="utf-8") as f:
         f.write(js)
 
     index = os.path.join(AQUI, "index.html")
+    marca = os.path.join(AQUI, ".aberto")
+    recente = os.path.isfile(marca) and time.time() - os.path.getmtime(marca) < 6 * 3600
     if a.nao_abrir:
         print("PAINEL_PRONTO: file://" + index)
+    elif recente and not a.abrir:
+        print("PAINEL_ATUALIZADO: a aba aberta recarrega sozinha em poucos segundos (file://" + index + ")")
     else:
         print("PAINEL_ABERTO: " + abrir(index))
+        with open(marca, "w") as f:
+            f.write(str(time.time()))
     print(f"cliente: {atual} | clientes no painel: {', '.join(dados)}")
     return 0
 

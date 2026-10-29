@@ -2,6 +2,9 @@
 
 Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` seguida do que mudou, em linguagem de usuário.
 
+## 2026.10.29-5 (29/10/2026)
+- **Painel sempre em dia:** todo comando do /ojhon atualiza o painel no começo e no fim. A aba aberta se atualiza sozinha em poucos segundos (aparece "O Jhon atualizou o painel") e não abre aba nova a cada comando.
+
 ## 2026.10.29-4 (29/10/2026)
 - **Ficha da campanha:** clique numa campanha e veja tudo só sobre ela: investimento, resultado, custo por resultado comparado com as do mesmo tipo, CPM contra a média da conta, cliques, alcance, frequência, orçamento, posição no ranking e o parecer do Jhon.
 - **Concorrentes com player:** a área Concorrentes mostra o que a concorrência anuncia agora, com filtro por anunciante, há quantos dias cada anúncio está no ar e o botão ▶ que abre o vídeo direto da Biblioteca de Anúncios do Meta, sem baixar nada.

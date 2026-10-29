@@ -6,7 +6,7 @@ O Jhon mostra todo insight e resultado aqui: um painel local no navegador (layou
 ```
 python3 ~/.claude/skills/ojhon/painel/painel.py --cliente <pasta do cliente>
 ```
-Junta `clientes/*/painel.json` em `painel/dados.js` (fora do git) e abre `painel/index.html`. O seletor do topo troca de cliente. A primeira abertura baixa o mapa (precisa de internet; depois fica no navegador).
+Junta `clientes/*/painel.json` em `painel/dados.js` (fora do git, com uma versão) e abre `painel/index.html` se não abriu nas últimas 6 h (`--abrir` força). A aba aberta relê `dados.js` a cada 4 s e se redesenha quando a versão muda. O seletor do topo troca de cliente. A primeira abertura baixa o mapa (precisa de internet; depois fica no navegador).
 
 ## clientes/<cliente>/painel.json (fora do git)
 Modelo completo: `clientes/_exemplo/painel.json`. Campos:

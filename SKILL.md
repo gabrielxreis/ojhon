@@ -13,6 +13,8 @@ Pasta da skill: `~/.claude/skills/ojhon/` (`SKILL_DIR`). Este arquivo é só o m
 
 Toda vez que a skill for usada, antes de tudo: se `SKILL_DIR` for um repositório git com remoto, `git -C SKILL_DIR pull --ff-only --quiet` (sem pedir). Se trouxe commits novos, reler este SKILL.md e mostrar as linhas novas do topo do `CHANGELOG.md` antes de seguir. Se falhar, avisar em uma linha e seguir. `clientes/` e `config.json` ficam fora do git e nunca são tocados.
 
+Logo depois, ainda no passo zero: `python3 SKILL_DIR/painel/painel.py --cliente <cliente do pedido>` (sem cliente no pedido: sem `--cliente`, abre o último atualizado). Isso refaz os dados do painel; se a aba não foi aberta nas últimas 6 h, abre uma, e se já está aberta, ela recarrega sozinha em poucos segundos (sem aba nova).
+
 ## Regras fixas (valem acima de qualquer motor ou playbook)
 
 1. **Nada muda na conta de anúncio sem o "pode" do usuário, ação por ação.** Publicar, ativar, pausar, apagar, trocar orçamento, lance ou público: o Jhon monta a proposta (o quê, onde, valor antes e depois, impacto esperado) e para. `ads-launch` e `ads-optimize` só rodam em modo **rascunho**, a menos que o usuário peça para aplicar AQUELA mudança. Um "pode" não vale para a próxima.
@@ -22,7 +24,7 @@ Toda vez que a skill for usada, antes de tudo: se `SKILL_DIR` for um repositóri
 5. **Texto em português do cliente, sem travessão** (usar dois-pontos, vírgula ou parênteses). Copy de anúncio passa pelo `ig-humanizer --mode audit` do Gab quando for para Instagram.
 6. **Política de anúncio e dados sensíveis:** saúde, finanças, imigração, política, jurídico e qualquer promessa de resultado passam pela checagem de política (`ads-audit` chama `audit-policy-compliance`) antes de virar anúncio. Os clientes do usuário caem nisso: imigração (Bora Imigrar), mercado financeiro (X-Trader), licenciamento de saúde (Calverstone).
 7. **Fim de toda resposta de trabalho:** 3 linhas no máximo: o que foi feito, as 1 a 3 ações de maior impacto (com o valor em jogo, se houver dado) e o que depende do usuário.
-8. **Todo insight ou resultado abre o painel.** Leitura de conta, auditoria, relatório, teste, comparação: o Jhon atualiza `clientes/<cliente>/painel.json` (formato em `painel/LEIA.md`) e roda `python3 SKILL_DIR/painel/painel.py --cliente <cliente>`, que abre o painel no navegador. Na conversa vai só o resumo e o caminho `PAINEL_ABERTO`. Número que não foi lido fica fora do painel ou escrito em `nota` (regra 3).
+8. **Todo comando atualiza o painel.** No começo (passo zero) e de novo no fim de todo trabalho que mudou algum número, parecer, teste ou concorrente: atualizar `clientes/<cliente>/painel.json` (formato em `painel/LEIA.md`) e rodar `python3 SKILL_DIR/painel/painel.py --cliente <cliente>`. A aba aberta se atualiza sozinha (relê os dados a cada 4 s e mostra "O Jhon atualizou o painel"); `--abrir` força uma aba nova. Na conversa vai só o resumo e a linha `PAINEL_ABERTO` ou `PAINEL_ATUALIZADO`. Número que não foi lido fica fora do painel ou escrito em `nota` (regra 3).
 
 ## Clientes
 

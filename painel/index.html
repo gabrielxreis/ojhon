@@ -311,6 +311,7 @@ tbody tr:hover td{background:var(--hover)}
 .anuncio .tela small{color:#C9D6FF;font-size:12px;position:relative;z-index:1}
 .anuncio .link{font-size:12.5px;color:var(--blue);text-decoration:none}
 .anuncio .link:hover{text-decoration:underline}
+.aviso{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));background:var(--blue);color:#fff;padding:10px 14px;border-radius:10px;box-shadow:var(--pop);font-size:13px;font-weight:500;z-index:80}
 </style>
 </head>
 <body>
@@ -347,6 +348,7 @@ tbody tr:hover td{background:var(--hover)}
     </div>
   </aside>
   <div class="veu" id="veu"></div>
+  <div class="aviso" id="atualizado" hidden role="status">O Jhon atualizou o painel</div>
 
   <main class="main">
     <div class="frame">
@@ -493,7 +495,8 @@ tbody tr:hover td{background:var(--hover)}
 <script>
 (() => {
 const DADOS = window.JHON_DADOS || {};
-const ids = Object.keys(DADOS);
+let ids = Object.keys(DADOS);
+let versao = window.JHON_VERSAO || '';
 let atual = window.JHON_ATUAL && DADOS[window.JHON_ATUAL] ? window.JHON_ATUAL : ids[0];
 const $ = (s) => document.querySelector(s);
 const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
@@ -1029,6 +1032,34 @@ $('#exportar').addEventListener('click', () => {
 let rz; window.addEventListener('resize', () => { ajustarMenu(); clearTimeout(rz); rz = setTimeout(() => { const d = DADOS[atual]; if (d) { drawChart(d.serie || {}); drawMap((d.geo || {}).pontos || []); } }, 150); });
 
 render();
+
+// atualização automática: a cada 4 s relê dados.js; se o Jhon mudou algo, redesenha sem recarregar a página
+let lendo = false;
+const reler = () => {
+  if (lendo || document.hidden) return; lendo = true;
+  const sc = document.createElement('script');
+  sc.src = 'dados.js?t=' + Date.now();
+  sc.onload = sc.onerror = () => {
+    sc.remove(); lendo = false;
+    const v = window.JHON_VERSAO || '';
+    if (!v || v === versao) return;
+    const trocouCliente = window.JHON_ATUAL && window.JHON_ATUAL !== atual && versao;
+    versao = v;
+    Object.keys(DADOS).forEach((k) => delete DADOS[k]);
+    Object.assign(DADOS, window.JHON_DADOS || {});
+    ids = Object.keys(DADOS);
+    if (trocouCliente || !DADOS[atual]) atual = window.JHON_ATUAL && DADOS[window.JHON_ATUAL] ? window.JHON_ATUAL : ids[0];
+    const ficha = !$('#ficha').hidden;
+    render();
+    const ativa = document.querySelector('.tab.active'); mostrar(ativa ? ativa.dataset.tab : 'geral');
+    if (ficha) fecharCampanha();
+    const av = $('#atualizado'); av.hidden = false; clearTimeout(av._t); av._t = setTimeout(() => (av.hidden = true), 3500);
+  };
+  document.body.append(sc);
+};
+setInterval(reler, 4000);
+document.addEventListener('visibilitychange', reler);
+
 let aba = 'geral'; try { aba = localStorage.getItem('jhon-aba') || 'geral'; } catch (e) {}
 mostrar(aba);
 })();

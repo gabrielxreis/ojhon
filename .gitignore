@@ -5,3 +5,4 @@ clientes/*
 __pycache__/
 .venv/
 painel/dados.js
+painel/.aberto
