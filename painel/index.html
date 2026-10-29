@@ -311,7 +311,7 @@ tbody tr:hover td{background:var(--hover)}
 .anuncio .tela small{color:#C9D6FF;font-size:12px;position:relative;z-index:1}
 .anuncio .link{font-size:12.5px;color:var(--blue);text-decoration:none}
 .anuncio .link:hover{text-decoration:underline}
-.aviso{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));background:var(--blue);color:#fff;padding:10px 14px;border-radius:10px;box-shadow:var(--pop);font-size:13px;font-weight:500;z-index:80}
+.aviso{max-width:min(420px,calc(100vw - 32px));line-height:1.45;position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));background:var(--blue);color:#fff;padding:10px 14px;border-radius:10px;box-shadow:var(--pop);font-size:13px;font-weight:500;z-index:80}
 .cav{border-radius:50%;overflow:hidden;flex:none;display:grid;place-items:center;background:linear-gradient(140deg,#2F6BFF,#1B2B8F);color:#fff;font-weight:700;font-size:14px;border:2px solid var(--card);box-shadow:0 0 0 1px var(--line)}
 .cav img{width:100%;height:100%;object-fit:cover;display:block}
 .chefe{border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:14px;background:linear-gradient(135deg,var(--blue-soft),var(--card) 55%)}
@@ -835,6 +835,11 @@ function avatar(p, tam) {
   return box;
 }
 const ICO_BAIXAR = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>';
+function avisar(txt, ms) {
+  const av = document.getElementById('atualizado'); if (!av) return;
+  av.textContent = txt; av.hidden = false; clearTimeout(av._t);
+  av._t = setTimeout(() => { av.hidden = true; av.textContent = 'O Jhon atualizou o painel'; }, ms || 3500);
+}
 function botaoBaixar(item, quem) {
   const nome = ('Concorrente - ' + (quem || item.anunciante || '') + ' - ' + item.id + '.mp4').replace(/[\\/:*?"<>|]/g, '');
   if (item.video_local) {
@@ -845,10 +850,10 @@ function botaoBaixar(item, quem) {
     return a;
   }
   const b = document.createElement('button'); b.className = 'baixar pendente'; b.innerHTML = ICO_BAIXAR;
-  b.title = 'Vídeo ainda não baixado: clique para copiar o pedido ao Jhon'; b.setAttribute('aria-label', 'Pedir ao Jhon para baixar este vídeo');
+  b.title = 'Vídeo ainda não está no seu Mac: clique para pedir ao Jhon'; b.setAttribute('aria-label', 'Pedir ao Jhon para baixar este vídeo');
   b.addEventListener('click', (e) => {
     e.stopPropagation(); const cmd = '/ojhon baixar o criativo ' + item.id + ' de ' + atual;
-    const ok = () => { b.title = 'Copiado: cole no Claude'; b.classList.add('ok'); setTimeout(() => b.classList.remove('ok'), 1600); };
+    const ok = () => { b.classList.add('ok'); setTimeout(() => b.classList.remove('ok'), 1600); avisar('Esse vídeo ainda não está no seu Mac. Copiei o pedido: cole no Claude e o Jhon baixa só ele.', 6000); };
     navigator.clipboard ? navigator.clipboard.writeText(cmd).then(ok, ok) : ok();
   });
   return b;
@@ -1236,7 +1241,7 @@ const reler = () => {
     render();
     const ativa = document.querySelector('.tab.active'); mostrar(ativa ? ativa.dataset.tab : 'geral');
     if (ficha) fecharCampanha();
-    const av = $('#atualizado'); av.hidden = false; clearTimeout(av._t); av._t = setTimeout(() => (av.hidden = true), 3500);
+    avisar('O Jhon atualizou o painel');
   };
   document.body.append(sc);
 };
