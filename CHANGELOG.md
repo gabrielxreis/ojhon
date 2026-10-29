@@ -2,6 +2,9 @@
 
 Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` seguida do que mudou, em linguagem de usuário.
 
+## 2026.10.29-12 (29/10/2026)
+- **Todas as contas atualizadas a cada chamada:** toda vez que o Jhon é chamado, ainda no passo zero, ele puxa as contas de anúncio pelo MCP do Meta e manda os números para o CRM de cada cliente que tem um (ou para o painel, quem não tem CRM). Funciona em qualquer máquina: o endereço e a senha de envio do CRM vão no `crm.json` do cliente, que viaja pelo Drive, e o envio é o `painel/crm.py` (passo a passo em `painel/CRM.md`).
+
 ## 2026.10.29-11 (29/10/2026)
 - **Jhon atualiza o CRM do cliente:** cliente com `clientes/<cliente>/crm.json` (como o X-Trader, em crm.xtraderacademy.com) recebe os números novos do Meta Ads no CRM ao fim de todo trabalho do Jhon na conta, sozinho, e a conversa mostra `CRM_ATUALIZADO` ou o erro.
 
