@@ -206,7 +206,7 @@ th[aria-sort=descending]::after{content:" ↓"} th[aria-sort=ascending]::after{c
 .pill[data-p=ruim]{background:var(--bad-bg);color:var(--bad-fg)}
 .foot-note{padding:0 16px 20px;color:var(--muted);font-size:12px;display:grid;gap:4px}
 .empty{color:var(--muted);font-size:13px;padding:30px 0;text-align:center}
-section[hidden]{display:none!important}
+[hidden]{display:none!important}
 
 @media (max-width:1180px){.parecer{grid-template-columns:1fr 1fr}}
 @media (max-width:1100px){.row-a,.row-b{grid-template-columns:1fr}}
@@ -265,6 +265,52 @@ section[hidden]{display:none!important}
 .vazio{border:1px dashed var(--line);border-radius:12px;padding:28px;text-align:center;display:grid;gap:10px;justify-items:center;color:var(--fg-2)}
 .vazio code{font-family:ui-monospace,Menlo,monospace;background:var(--soft);border:1px solid var(--line);padding:6px 10px;border-radius:8px;color:var(--fg)}
 @media (max-width:767px){.calc,.res{grid-template-columns:1fr}.res div{border-left:0;border-top:1px solid var(--line)}.res div:first-child{border-top:0}}
+.ficha-veu{position:fixed;inset:0;background:var(--veu);z-index:70}
+.ficha{position:fixed;top:0;right:0;bottom:0;width:min(560px,100vw);background:var(--panel);border-left:1px solid var(--line);box-shadow:var(--pop);z-index:71;display:flex;flex-direction:column;animation:entra .22s ease}
+@keyframes entra{from{transform:translateX(24px);opacity:0}}
+.ficha-top{display:flex;gap:12px;align-items:flex-start;padding:20px 20px 14px;border-bottom:1px solid var(--line)}
+.ficha-top h2{margin:0;font-size:18px;font-weight:600;line-height:1.3;word-break:break-word}
+.ficha-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{font-size:12px;padding:2px 9px;border-radius:99px;background:var(--chip);color:var(--fg-2)}
+.ficha-corpo{flex:1;min-height:0;overflow-y:auto;padding:18px 20px 28px;display:grid;gap:18px;align-content:start}
+.ficha-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line);border-radius:12px}
+.ficha-kpis div{padding:12px 14px;display:grid;gap:3px;border-top:1px solid var(--line)}
+.ficha-kpis div:nth-child(-n+2){border-top:0}
+.ficha-kpis div:nth-child(2n){border-left:1px solid var(--line)}
+.ficha-kpis span{font-size:12.5px;color:var(--fg-2)}
+.ficha-kpis b{font-size:20px;font-weight:600;letter-spacing:-.01em}
+.ficha-kpis small{font-size:11.5px;color:var(--muted)}
+.ficha-kpis small.up{color:var(--ok)} .ficha-kpis small.down{color:var(--bad)}
+.ficha h3{margin:0 0 8px;font-size:14px;font-weight:600}
+.ficha-parecer{border-radius:12px;padding:14px;border:1px solid var(--line);display:grid;gap:6px;line-height:1.5}
+.ficha-parecer[data-p=bom]{background:var(--ok-bg);border-color:transparent}
+.ficha-parecer[data-p=atenção]{background:var(--warn-bg);border-color:transparent}
+.ficha-parecer[data-p=ruim]{background:var(--bad-bg);border-color:transparent}
+.ficha-rank{display:grid;gap:8px}
+.ficha-rank .dist-row b{font-weight:500}
+.ficha-rank .eu b{color:var(--blue);font-weight:600}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:var(--hover)}
+#criativos .dist-row{cursor:pointer;border-radius:10px;padding:6px;margin:-6px}
+#criativos .dist-row:hover{background:var(--hover)}
+@media (max-width:767px){.ficha-kpis{grid-template-columns:1fr}.ficha-kpis div{border-left:0!important;border-top:1px solid var(--line)!important}.ficha-kpis div:first-child{border-top:0!important}}
+.conc{display:grid;gap:16px}
+.conc-ins{border-radius:12px;padding:14px 16px;background:var(--blue-soft);color:var(--navy)}
+.conc-ins h3{margin:0 0 8px;font-size:14px;font-weight:600}
+.conc-ins ul{margin:0;padding-left:18px;display:grid;gap:6px;line-height:1.45;font-size:13px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--fg-2)}
+.chip:hover{background:var(--hover)}
+.chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+#concorrentes .testes{grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr))}
+.anuncio .tela{all:unset;cursor:pointer;aspect-ratio:9/12;max-height:300px;border-radius:10px;background:linear-gradient(160deg,#1B2B8F,#060A14);display:grid;place-content:center;justify-items:center;gap:8px;color:#fff;position:relative;overflow:hidden}
+.anuncio .tela::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(92,141,255,.35),transparent 60%)}
+.anuncio .tela:hover .play,.anuncio .tela:focus-visible .play{transform:scale(1.08);background:var(--blue)}
+.anuncio .tela:focus-visible{outline:2px solid var(--blue-2);outline-offset:2px}
+.play{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:20px;padding-left:4px;transition:transform .15s,background .15s;position:relative;z-index:1}
+.anuncio .tela small{color:#C9D6FF;font-size:12px;position:relative;z-index:1}
+.anuncio .link{font-size:12.5px;color:var(--blue);text-decoration:none}
+.anuncio .link:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -428,8 +474,8 @@ section[hidden]{display:none!important}
       <section data-sec="concorrentes" data-so="1">
         <div class="grid"><article class="card">
           <h2>Concorrentes</h2>
-          <p class="sub">Anúncios ativos da concorrência na Biblioteca de Anúncios do Meta (Brasil).</p>
-          <div class="testes" id="concorrentes"></div>
+          <p class="sub">Anúncios ativos da concorrência na Biblioteca de Anúncios do Meta (Brasil). Clique em ▶ para assistir direto do site do Meta, sem baixar.</p>
+          <div id="concorrentes" style="margin-top:14px"></div>
         </article></div>
       </section>
 
@@ -437,6 +483,9 @@ section[hidden]{display:none!important}
     </div>
   </main>
 </div>
+
+<div class="ficha-veu" id="ficha-veu" hidden></div>
+<aside class="ficha" id="ficha" hidden role="dialog" aria-modal="true" aria-labelledby="ficha-t"></aside>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
@@ -569,6 +618,7 @@ function render() {
     const top = el('div', 'dist-top'); top.append(el('b', null, r.campanha.replace(/^Post: /, '')), el('span', null, fmt(r.custo_por_resultado, 'brl') + ' por visita'));
     const tr = el('div', 'track'); const s = el('span'); s.style.width = Math.max(2, r.custo_por_resultado / mx * 100) + '%'; s.style.background = pc[r.parecer] || 'var(--faint)'; tr.append(s);
     row.append(top, tr, el('small', null, fmt(r.resultados, 'num') + ' visitas · ' + fmt(r.gasto, 'brl') + ' · ' + r.porque));
+    row.addEventListener('click', () => abrirCampanha(r.id));
     cv.append(row);
   });
   if (!vis.length) cv.append(el('p', 'empty', 'Sem campanhas de visita ao perfil nesta leitura.'));
@@ -626,18 +676,122 @@ function render() {
   if (!(d.testes || []).length) te.append(vazio('Nenhum teste de criativo ainda.', '/ojhon criativo ' + atual));
 
   // concorrentes
-  const co = $('#concorrentes'); co.replaceChildren();
-  (d.concorrentes || []).forEach((a) => {
-    const c = el('div', 'teste');
-    const top = el('div', 'teste-top'); top.append(el('b', null, a.anunciante || '—'));
-    if (a.desde) top.append(el('span', 'pill', 'desde ' + a.desde));
-    c.append(top, el('q', null, a.texto || ''), el('small', null, [a.cta, a.destino, a.criativos ? a.criativos + ' anúncios no mesmo criativo' : ''].filter(Boolean).join(' · ')));
-    co.append(c);
-  });
-  if (!(d.concorrentes || []).length) co.append(vazio('Ainda sem leitura de concorrentes. Peça ao Jhon e ele puxa os anúncios ativos deles.', '/ojhon concorrente ' + atual));
+  concFiltro = '';
+  desenharConcorrentes();
+
 
   drawTable();
   $('#fonte').replaceChildren(el('span', null, 'Fonte: ' + (d.fonte || '—') + '. Atualizado em ' + (d.atualizado ? d.atualizado.split('-').reverse().join('/') : '—') + '.'), el('span', null, 'Gerado pelo Jhon (/ojhon). Conta: ' + (c.conta || '—') + (c.conta_id ? ' (' + c.conta_id + ')' : '') + '.'));
+}
+
+function abrirCampanha(id) {
+  const d = DADOS[atual]; if (!d) return;
+  const camp = d.campanhas || [];
+  const r = camp.find((x) => x.id === id); if (!r) return;
+  const tot = d3.sum(camp, (x) => x.gasto) || 1;
+  const iguais = camp.filter((x) => x.resultado_tipo === r.resultado_tipo).sort((a, b) => a.custo_por_resultado - b.custo_por_resultado);
+  const media = d3.mean(iguais, (x) => x.custo_por_resultado);
+  const pos = iguais.indexOf(r) + 1;
+  const cpmConta = (d.totais && d.totais.cpm) || d3.sum(camp, (x) => x.gasto) / (d3.sum(camp, (x) => x.gasto / (x.cpm || Infinity) * 1000) || 1) * 1000;
+  const f = $('#ficha'); f.replaceChildren();
+  const top = el('div', 'ficha-top'); const tt = el('div'); tt.style.flex = '1'; tt.style.minWidth = '0';
+  const h = el('h2', null, r.campanha); h.id = 'ficha-t';
+  const tags = el('div', 'ficha-tags');
+  const pill = el('span', 'pill', r.parecer); pill.dataset.p = r.parecer;
+  tags.append(pill, el('span', 'tag', r.grupo), el('span', 'tag', r.quando), el('span', 'tag', r.resultado_tipo));
+  tt.append(h, tags);
+  const x = el('button', 'icon-btn'); x.setAttribute('aria-label', 'Fechar'); x.textContent = '✕'; x.addEventListener('click', fecharCampanha);
+  top.append(tt, x);
+  const corpo = el('div', 'ficha-corpo');
+  const cmp = (v, ref, menorMelhor) => { if (!ref || !v) return ['', '']; const ch = v / ref - 1; const bom = menorMelhor ? ch < 0 : ch > 0; return [(ch >= 0 ? '+' : '') + F.pct0.format(ch) + ' contra a média', Math.abs(ch) < 0.02 ? '' : bom ? 'up' : 'down']; };
+  const kp = el('div', 'ficha-kpis');
+  const k = (rot, val, nota, cls) => { const c = el('div'); c.append(el('span', null, rot), el('b', null, val), el('small', cls || null, nota || '')); kp.append(c); };
+  const [n1, c1] = cmp(r.custo_por_resultado, media, true);
+  const [n2, c2] = cmp(r.cpm, cpmConta, true);
+  k('Investimento', fmt(r.gasto, 'brl'), F.pct.format(r.gasto / tot) + ' do total lido');
+  k('Resultados', fmt(r.resultados, 'num'), r.resultado_tipo);
+  k('Custo por resultado', fmt(r.custo_por_resultado, 'brl'), iguais.length > 1 ? n1 + ' do mesmo tipo' : 'única deste tipo', c1);
+  k('CPM', fmt(r.cpm, 'brl'), 'média da conta ' + fmt(cpmConta, 'brl') + (n2 ? ' · ' + n2.replace(' contra a média', '') : ''), c2);
+  k('Cliques no link', r.cliques_link == null ? '—' : fmt(r.cliques_link, 'num'), r.cliques_link && r.gasto ? fmt(r.gasto / r.cliques_link, 'brl') + ' por clique' : '');
+  k('Alcance', fmt(r.alcance, 'num'), 'frequência ' + (r.frequencia == null ? '—' : r.frequencia.toLocaleString('pt-BR')));
+  k('Orçamento diário', r.orcamento_dia ? fmt(r.orcamento_dia, 'brl0') : 'do conjunto', r.orcamento_dia && r.gasto ? 'cerca de ' + Math.round(r.gasto / r.orcamento_dia) + ' dias de veiculação' : '');
+  k('Posição no tipo', iguais.length > 1 ? pos + 'ª de ' + iguais.length : '—', 'pelo custo por resultado, da mais barata');
+  const par = el('div'); par.append(el('h3', null, 'Parecer do Jhon'));
+  const pb = el('div', 'ficha-parecer'); pb.dataset.p = r.parecer; pb.append(el('b', null, r.parecer[0].toUpperCase() + r.parecer.slice(1)), el('span', null, r.porque));
+  par.append(pb);
+  const rk = el('div'); rk.append(el('h3', null, 'Contra as outras de ' + r.resultado_tipo.toLowerCase()));
+  const lista = el('div', 'ficha-rank');
+  const mx = d3.max(iguais, (x) => x.custo_por_resultado) || 1;
+  iguais.forEach((o) => {
+    const row = el('div', 'dist-row' + (o === r ? ' eu' : ''));
+    const t2 = el('div', 'dist-top'); t2.append(el('b', null, o.campanha.replace(/^Post: /, '')), el('span', null, fmt(o.custo_por_resultado, 'brl')));
+    const tr = el('div', 'track'); const sp = el('span'); sp.style.width = Math.max(2, o.custo_por_resultado / mx * 100) + '%'; sp.style.background = o === r ? 'var(--blue)' : 'var(--blue-3)'; tr.append(sp);
+    row.append(t2, tr); if (o !== r) { row.style.cursor = 'pointer'; row.addEventListener('click', () => abrirCampanha(o.id)); }
+    lista.append(row);
+  });
+  rk.append(lista);
+  const cmd = '/ojhon analisa a campanha "' + r.campanha + '" de ' + atual;
+  const pedir = el('button', 'btn'); pedir.append(el('code', null, 'Pedir ao Jhon: analisar só esta campanha'));
+  pedir.addEventListener('click', () => { const ok = () => { pedir.lastChild.textContent = 'copiado: cole no Claude'; }; navigator.clipboard ? navigator.clipboard.writeText(cmd).then(ok, ok) : ok(); });
+  corpo.append(kp, par, rk, pedir);
+  f.append(top, corpo);
+  f.hidden = false; $('#ficha-veu').hidden = false; x.focus();
+}
+function fecharCampanha() { $('#ficha').hidden = true; $('#ficha-veu').hidden = true; }
+
+let concFiltro = '';
+function diasNoAr(desde, ate) { const a = new Date(desde), b = new Date(ate || Date.now()); return Math.max(0, Math.round((b - a) / 864e5)); }
+function player(link) {
+  const w = window.open(link, 'jhon-player', 'popup,width=540,height=920');
+  if (!w) window.open(link, '_blank');
+}
+function desenharConcorrentes() {
+  const d = DADOS[atual]; const co = $('#concorrentes'); co.replaceChildren();
+  const ads = d.concorrentes || [];
+  if (!ads.length) { co.append(vazio('Ainda sem leitura de concorrentes. Peça ao Jhon e ele puxa os anúncios ativos deles.', '/ojhon concorrente ' + atual)); return; }
+  const wrap = el('div', 'conc');
+  if ((d.concorrentes_insights || []).length) {
+    const ins = el('div', 'conc-ins'); ins.append(el('h3', null, 'O que a concorrência mostra'));
+    const ul = el('ul'); d.concorrentes_insights.forEach((t) => ul.append(el('li', null, t))); ins.append(ul); wrap.append(ins);
+  }
+  const chips = el('div', 'chips');
+  const nomes = [...new Set(ads.map((x) => x.anunciante))];
+  [''].concat(nomes).forEach((n) => {
+    const c = el('button', 'chip' + (concFiltro === n ? ' on' : ''), n || 'Todos (' + nomes.length + ')');
+    c.addEventListener('click', () => { concFiltro = n; desenharConcorrentes(); });
+    chips.append(c);
+  });
+  wrap.append(chips);
+  const res = (d.concorrentes_resumo || []).filter((r) => !concFiltro || r.anunciante === concFiltro);
+  if (res.length) {
+    const tw = el('div', 'twrap'); const tb = el('table'); const th = el('thead'); const hr = el('tr');
+    ['Anunciante', 'Tipo', 'Anúncios lidos', 'No ar desde', 'Leitura do Jhon'].forEach((t, i) => { const h = el('th', i === 2 ? 'num' : null, t); h.style.cursor = 'default'; hr.append(h); });
+    th.append(hr); const bd = el('tbody');
+    res.forEach((r) => {
+      const tr = el('tr'); tr.addEventListener('click', () => { concFiltro = concFiltro === r.anunciante ? '' : r.anunciante; desenharConcorrentes(); });
+      const dias = diasNoAr(r.desde, d.atualizado);
+      tr.append(el('td', 'name', r.anunciante), el('td', null, r.categoria), el('td', 'num', r.anuncios_lidos), el('td', null, r.desde.split('-').reverse().join('/') + ' (' + dias + ' dias)'), el('td', 'why', r.leitura));
+      bd.append(tr);
+    });
+    tb.append(th, bd); tw.append(tb); wrap.append(tw);
+  }
+  const grade = el('div', 'testes');
+  ads.filter((x) => !concFiltro || x.anunciante === concFiltro).forEach((a) => {
+    const c = el('div', 'teste anuncio');
+    const top = el('div', 'teste-top'); top.append(el('b', null, a.anunciante));
+    const dias = diasNoAr(a.desde, d.atualizado);
+    const pill = el('span', 'pill', dias >= 60 ? dias + ' dias no ar' : dias + ' dias'); pill.dataset.p = dias >= 60 ? 'bom' : 'atenção'; top.append(pill);
+    const tela = el('button', 'tela'); tela.setAttribute('aria-label', 'Assistir o anúncio de ' + a.anunciante);
+    tela.append(el('span', 'play', '▶'), el('small', null, 'Assistir na Biblioteca'));
+    tela.addEventListener('click', () => player(a.link));
+    const meta = [a.categoria, a.versoes > 1 ? a.versoes + ' anúncios no mesmo criativo' : null, 'ID ' + a.id].filter(Boolean).join(' · ');
+    const lk = el('a', 'link', 'Abrir na Biblioteca de Anúncios ↗'); lk.href = a.link; lk.target = '_blank'; lk.rel = 'noopener';
+    c.append(top, tela, el('q', null, a.texto), el('small', null, meta), lk);
+    grade.append(c);
+  });
+  wrap.append(grade);
+  if (d.concorrentes_fonte) wrap.append(el('p', 'map-note', d.concorrentes_fonte));
+  co.append(wrap);
 }
 
 function vazio(txt, cmd) {
@@ -784,10 +938,11 @@ function drawTable() {
     const tdp = el('td'); tdp.append(pill);
     tr.append(el('td', 'name', r.campanha), el('td', null, r.grupo), el('td', null, r.quando), el('td', 'num', fmt(r.gasto, 'brl')),
       el('td', 'num', fmt(r.resultados, 'num')), el('td', null, r.resultado_tipo), el('td', 'num', fmt(r.custo_por_resultado, 'brl')), el('td', 'num', fmt(r.cpm, 'brl')), tdp, el('td', 'why', r.porque));
+    tr.tabIndex = 0; tr.addEventListener('click', () => abrirCampanha(r.id)); tr.addEventListener('keydown', (e) => { if (e.key === 'Enter') abrirCampanha(r.id); });
     tb.append(tr);
   });
   if (!rows.length) { const tr = el('tr'); const td = el('td', 'empty', 'Nenhuma campanha com esse filtro.'); td.colSpan = 10; tr.append(td); tb.append(tr); }
-  $('#camp-s').textContent = rows.length + ' campanhas. Clique no título de uma coluna para ordenar.';
+  $('#camp-s').textContent = rows.length + ' campanhas. Clique numa campanha para ver tudo sobre ela; no título da coluna, para ordenar.';
 }
 
 // abas
@@ -817,7 +972,8 @@ $('#colapsar').addEventListener('click', () => {
 });
 $('#burger').addEventListener('click', () => app.classList.add('aberto'));
 $('#veu').addEventListener('click', () => app.classList.remove('aberto'));
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') app.classList.remove('aberto'); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { app.classList.remove('aberto'); fecharCampanha(); } });
+$('#ficha-veu').addEventListener('click', fecharCampanha);
 ajustarMenu();
 
 // tema claro / escuro (segue o sistema até a pessoa escolher)

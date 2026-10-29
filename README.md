@@ -46,6 +46,7 @@
 
 O Jhon se atualiza sozinho toda vez que você usa e **mostra o que mudou** logo no começo da conversa. Histórico completo em [`CHANGELOG.md`](CHANGELOG.md). Últimas:
 
+- **Ficha da campanha e player de concorrentes:** clique numa campanha para ver tudo só sobre ela; assista os anúncios da concorrência direto da Biblioteca do Meta.
 - **Painel no navegador:** todo insight ou resultado abre um painel local com resumo, evolução da conta, mapa de entrega, investimento por tipo, parecer do Jhon, tabela de campanhas, plano de verba, testes de criativo e concorrentes. Tema claro e escuro, e funciona em qualquer tamanho de tela.
 - **MCP oficial do Meta Ads:** conecte `https://mcp.facebook.com/ads` e o Jhon lê a conta direto, sem export.
 - **ID própria:** azul elétrico, na mesma família visual do /ogab.
@@ -145,12 +146,12 @@ python3 ~/.claude/skills/ojhon/painel/painel.py --cliente <cliente>
 | Área | O que mostra |
 |---|---|
 | **Visão geral** | conclusão do Jhon numa frase, resumo com variação contra o período anterior (verde quando melhora, vermelho quando piora), mapa de entrega, evolução da conta por mês com tooltip e investimento por tipo de campanha |
-| **Campanhas** | tabela que ordena e busca (⌘K), com o selo bom, atenção ou ruim e o motivo; **Exportar** baixa o CSV |
+| **Campanhas** | tabela que ordena e busca (⌘K), com o selo bom, atenção ou ruim e o motivo; **clique numa campanha** e abre a ficha só dela (números, comparação com as do mesmo tipo e com a média da conta, parecer); **Exportar** baixa o CSV |
 | **Criativos** | custo por resultado de cada criativo, do mais barato ao mais caro |
 | **Parecer** | o que está bom, o que está ruim, o que fazer primeiro e o que falta você responder |
 | **Verba** | calculadora: preço, custo por venda alvo, vendas por semana e taxa viram verba por semana e por mês, retorno, sobra e ponto de empate, com cenários |
 | **Testes** | os criativos em teste, com gancho, ângulo e status |
-| **Concorrentes** | anúncios ativos da concorrência lidos na Biblioteca de Anúncios |
+| **Concorrentes** | o que a concorrência anuncia agora, resumo por anunciante, há quantos dias cada anúncio está no ar e o **player**: o botão ▶ abre o vídeo direto da Biblioteca de Anúncios do Meta, sem baixar nada |
 
 - **Vários clientes:** o seletor do topo troca de cliente.
 - **Menu lateral:** fica completo em tela grande, vira trilho de ícones em tela média e gaveta no celular. Também dá para recolher manualmente.

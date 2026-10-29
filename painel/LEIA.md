@@ -24,6 +24,13 @@ Modelo completo: `clientes/_exemplo/painel.json`. Campos:
 | `distribuicao` | `titulo, subtitulo, campo` (coluna das campanhas que agrupa o investimento, padrão `grupo`) |
 | `campanhas` | `[{id, campanha, grupo, quando, resultado_tipo, resultados, custo_por_resultado, gasto, cpm, cliques_link, alcance, frequencia, orcamento_dia, parecer (bom, atenção, ruim), porque}]` |
 | `parecer` | `bom[], ruim[], fazer[], lacunas[]` (frases do Jhon) |
+| `oferta` | `produto, preco, fonte, cpa_alvo, vendas_semana, taxa_pct`: valores iniciais da área Verba |
+| `testes`, `testes_regra` | `[{nome, angulo, gancho, duracao, status}]` e a regra de pausa e vitória |
+| `concorrentes` | `[{anunciante, categoria, id, desde (AAAA-MM-DD), versoes, texto, link}]`: o `link` é `https://www.facebook.com/ads/library/?id=<id>` e o botão ▶ abre o anúncio numa janela de player direto do site do Meta (nada é baixado; o endereço do vídeo do Meta expira e não é guardado) |
+| `concorrentes_resumo`, `concorrentes_insights`, `concorrentes_fonte` | uma linha por anunciante (`anunciante, categoria, anuncios_lidos, desde, leitura`), as leituras do Jhon e de onde veio |
+| `totais` | `cpm` e outros totais da conta: a ficha da campanha compara com eles |
 | `perfil` | `preenchidos, total, rotulo`: quanto do trafego.md está preenchido |
+
+Clicar numa campanha (tabela ou Criativos) abre a ficha dela: números, comparação com as do mesmo tipo e com a média da conta, parecer e o comando para pedir ao Jhon uma análise só dela.
 
 Regras: número só do dado do usuário (regra 3 do SKILL.md); o que não foi lido fica fora ou escrito em `nota`. Sem travessão nas frases.

@@ -2,6 +2,10 @@
 
 Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` seguida do que mudou, em linguagem de usuário.
 
+## 2026.10.29-4 (29/10/2026)
+- **Ficha da campanha:** clique numa campanha e veja tudo só sobre ela: investimento, resultado, custo por resultado comparado com as do mesmo tipo, CPM contra a média da conta, cliques, alcance, frequência, orçamento, posição no ranking e o parecer do Jhon.
+- **Concorrentes com player:** a área Concorrentes mostra o que a concorrência anuncia agora, com filtro por anunciante, há quantos dias cada anúncio está no ar e o botão ▶ que abre o vídeo direto da Biblioteca de Anúncios do Meta, sem baixar nada.
+
 ## 2026.10.29-3 (29/10/2026)
 - **ID do Jhon:** mesma família visual do Gab (fundo quase preto, cor neon, Inter Tight 800), com o azul elétrico como assinatura e um símbolo de barras subindo com seta. Arquivos em `assets/id/` e banner novo.
 - **Painel com tema escuro:** segue o tema do sistema e tem o botão de sol e lua no topo (a escolha fica salva).
