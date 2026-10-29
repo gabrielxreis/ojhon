@@ -1,6 +1,9 @@
 # Novidades do Jhon (/ojhon)
 
-Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` seguida do que mudou, em linguagem de usuário.
+Mais novo em cima. Cada versão é uma linha `## 2026.10.29-8
+- **Tráfego no Drive para outras máquinas:** `painel/drive.py subir|puxar --cliente <c>` leva `clientes/<c>/` (trafego.md, painel.json, miniaturas) para a pasta "Jhon - <c>" no Google Drive e traz de volta. O Jhon puxa no passo zero e sobe no fim de cada trabalho. Usa o `gws`; nenhum ID de cliente vai para o git.
+
+## AAAA.MM.DD-N (DD/MM/AAAA)` seguida do que mudou, em linguagem de usuário.
 
 ## 2026.10.29-7 (29/10/2026)
 - **Baixar só o que você quer, direto em Downloads:** favorito "⬇ Jhon" no Chrome (arraste uma vez do painel). O ⬇ de qualquer criativo, inclusive em Outros concorrentes, abre o anúncio; um clique no favorito salva o vídeo em Downloads. Nada fica guardado antes.

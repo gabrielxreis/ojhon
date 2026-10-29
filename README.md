@@ -48,6 +48,7 @@ O Jhon se atualiza sozinho toda vez que você usa e **mostra o que mudou** logo 
 
 - **Ficha da campanha e player de concorrentes:** clique numa campanha para ver tudo só sobre ela; assista os anúncios da concorrência direto da Biblioteca do Meta.
 - **Painel no navegador:** todo insight ou resultado abre um painel local com resumo, evolução da conta, mapa de entrega, investimento por tipo, parecer do Jhon, tabela de campanhas, plano de verba, testes de criativo e concorrentes. Tema claro e escuro, e funciona em qualquer tamanho de tela.
+- **Mesma conta em várias máquinas:** os dados de cada cliente (tráfego, painel, miniaturas) sobem para uma pasta "Jhon - <cliente>" no Google Drive e o Jhon puxa de lá no começo de cada uso (`painel/drive.py`, precisa do `gws` logado).
 - **MCP oficial do Meta Ads:** conecte `https://mcp.facebook.com/ads` e o Jhon lê a conta direto, sem export.
 - **ID própria:** azul elétrico, na mesma família visual do /ogab.
 - **claude-ads v2.1.0:** auditoria do Google sem contar palavra-chave negativa como ativa, fonte vencida reprovada, dependências seguras.
