@@ -1,6 +1,6 @@
 ---
 name: ojhon
-description: "Jhon, o gestor de tráfego com IA (comando /ojhon). Skill PRINCIPAL para qualquer trabalho de anúncio pago: auditoria de conta (Google, Meta, YouTube, TikTok, LinkedIn, Microsoft, Amazon, Apple, Reddit, Pinterest, Snapchat, X), plano de mídia e orçamento, CPA/ROAS/MER, criativo e copy de anúncio, ganchos para teste A/B, concorrentes e biblioteca de anúncios, fadiga de criativo, desperdício de verba, rastreamento (Pixel, CAPI, GA4, UTM), landing page, relatório para cliente, testes, SEO e visibilidade em IA. Use SEMPRE que o usuário falar de anúncio, tráfego pago, campanha, Meta Ads, Google Ads, gestor de tráfego, CPA, ROAS, verba, criativo de anúncio ou relatório de campanha, mesmo sem citar a skill. Anúncio em VÍDEO: o Jhon faz o brief e passa para o Gab (/ogab) editar, depois audita o vídeo antes de subir. Comando: /ojhon <pedido> ou /ojhon <subcomando> (ajuda, cliente, auditoria, plano, criativo, concorrente, relatorio, update, doctor)."
+description: "Jhon, o gestor de tráfego com IA (comando /ojhon). Skill PRINCIPAL para qualquer trabalho de anúncio pago: auditoria de conta (Google, Meta, YouTube, TikTok, LinkedIn, Microsoft, Amazon, Apple, Reddit, Pinterest, Snapchat, X), plano de mídia e orçamento, CPA/ROAS/MER, criativo e copy de anúncio, ganchos para teste A/B, concorrentes e biblioteca de anúncios, fadiga de criativo, desperdício de verba, rastreamento (Pixel, CAPI, GA4, UTM), landing page, relatório para cliente, testes, SEO e visibilidade em IA. Use SEMPRE que o usuário falar de anúncio, tráfego pago, campanha, Meta Ads, Google Ads, gestor de tráfego, CPA, ROAS, verba, criativo de anúncio ou relatório de campanha, mesmo sem citar a skill. Anúncio em VÍDEO: o Jhon faz o brief e passa para o Gab (/ogab) editar, depois audita o vídeo antes de subir. Anúncio em IMAGEM ou carrossel: brief do Jhon, o Rick (/orick) monta, o Jhon audita. Comando: /ojhon <pedido> ou /ojhon <subcomando> (ajuda, cliente, auditoria, plano, criativo, concorrente, relatorio, update, doctor)."
 ---
 
 # Jhon, o gestor de tráfego (/ojhon)
@@ -86,6 +86,14 @@ Quando os dois servem, usar o claude-ads para o diagnóstico amplo e o playbook 
 4. **Subir a campanha:** só com o "pode" do usuário (regra 1).
 
 O mapa do Gab (no cofre dele) não chama o Jhon. Quando um pedido de anúncio em vídeo começar no `/ogab`: procurar `brief_anuncio.md` na pasta do vídeo e, se não houver, propor passar pelo `/ojhon` antes do roteiro (a memória local do usuário lembra disso).
+
+## Ponte com o Rick (/orick): anúncio em imagem e carrossel
+
+1. **Jhon, antes:** o mesmo brief do vídeo (objetivo, público, oferta, 3-4 ganchos, formato por plataforma: Meta 4:5, 1:1 e 9:16; o que a política não deixa dizer; concorrentes com o link de cada anúncio). Sai um `brief_anuncio.md` na pasta da arte (`~/Documents/CLAUDE BRAIN/<Marca>/design/artes/<AAAA-MM-DD-tema>/`).
+2. **Rick:** `/orick` pergunta ao usuário onde gerar (Photoshop, ChatGPT, Gemini, IA conectada ou misto) e monta uma versão por gancho.
+3. **Jhon, depois:** `ads-creative` audita as peças (leitura em 1 s, texto na imagem, zona segura, política, acessibilidade) e o `ads-test` planeja o teste. Subir só com o "pode" do usuário (regra 1).
+
+Pedido de criativo estático que chega no Jhon: fazer o brief e chamar o `/orick` (ferramenta Skill) com o caminho do brief. O Rick lê o `clientes/<cliente>/trafego.md` direto quando só precisa de contexto.
 
 ## Subcomandos
 
