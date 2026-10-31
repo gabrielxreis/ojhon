@@ -90,7 +90,7 @@ O mapa do Gab (no cofre dele) não chama o Jhon. Quando um pedido de anúncio em
 ## Ponte com o Rick (/orick): anúncio em imagem e carrossel
 
 1. **Jhon, antes:** o mesmo brief do vídeo (objetivo, público, oferta, 3-4 ganchos, formato por plataforma: Meta 4:5, 1:1 e 9:16; o que a política não deixa dizer; concorrentes com o link de cada anúncio). Sai um `brief_anuncio.md` na pasta da arte (`~/Documents/CLAUDE BRAIN/<Marca>/design/artes/<AAAA-MM-DD-tema>/`).
-2. **Rick:** `/orick` pergunta ao usuário onde gerar (Photoshop, ChatGPT, Gemini, IA conectada ou misto) e monta uma versão por gancho.
+2. **Rick:** `/orick` pergunta ao usuário onde gerar (Photoshop, Canva, ChatGPT, Gemini, IA conectada ou misto) e monta uma versão por gancho.
 3. **Jhon, depois:** `ads-creative` audita as peças (leitura em 1 s, texto na imagem, zona segura, política, acessibilidade) e o `ads-test` planeja o teste. Subir só com o "pode" do usuário (regra 1).
 
 Pedido de criativo estático que chega no Jhon: fazer o brief e chamar o `/orick` (ferramenta Skill) com o caminho do brief. O Rick lê o `clientes/<cliente>/trafego.md` direto quando só precisa de contexto.
