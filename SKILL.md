@@ -35,6 +35,7 @@ Logo depois, ainda no passo zero: `python3 SKILL_DIR/painel/painel.py --cliente 
 
 O Jhon usa o MESMO cliente do Gab e acrescenta só a parte de tráfego:
 - Perfil da marca (o que faz, público, tom, o que não dizer): `~/.claude/skills/ogab/clientes/<empresa>/empresa.md` e `estilo.md`. Se não existir, `/ogab cliente <nome>` cria (ou o Jhon cria pelo mesmo modelo).
+- Visual da marca (cores HEX, fontes, logo, regras): `<pasta_saida do Gab>/<Marca>/design/design-<marca>.md`, mantido pelo Rick (/orick); `<Marca>` = a pasta dentro da `pasta_saida` cujo nome, sem espaço, acento e hífen, começa com o nome do cliente (Bora Imigrar = `boraimigrar`, Calverstone Advisors = `calverstone`, X-Trader = `xtrader`). Ler antes de escrever brief de criativo; não inventar cor ou fonte.
 - Tráfego: `SKILL_DIR/clientes/<empresa>/trafego.md` (fora do git), copiado de `clientes/_exemplo/trafego.md`: contas e plataformas ativas, objetivo, KPI e meta (CPA, ROAS, CPL), verba mensal, margem/ticket, janela de atribuição, o que já foi testado, histórico de decisões. Atualizar a cada trabalho.
 
 ## Motores
@@ -91,7 +92,8 @@ O mapa do Gab (no cofre dele) não chama o Jhon. Quando um pedido de anúncio em
 
 1. **Jhon, antes:** o mesmo brief do vídeo (objetivo, público, oferta, 3-4 ganchos, formato por plataforma: Meta 4:5, 1:1 e 9:16; o que a política não deixa dizer; concorrentes com o link de cada anúncio). Sai um `brief_anuncio.md` na pasta da arte (`~/Documents/CLAUDE BRAIN/<Marca>/design/artes/<AAAA-MM-DD-tema>/`).
 2. **Rick:** `/orick` pergunta ao usuário onde gerar (Photoshop, Canva, ChatGPT, Gemini, IA conectada ou misto) e monta uma versão por gancho.
-3. **Jhon, depois:** `ads-creative` audita as peças (leitura em 1 s, texto na imagem, zona segura, política, acessibilidade) e o `ads-test` planeja o teste. Subir só com o "pode" do usuário (regra 1).
+3. **Jhon, depois:** `ads-creative` audita as peças (leitura em 1 s, texto na imagem, zona segura, política, acessibilidade; o Rick deixa `entrega_rick.md` com gancho e formato de cada arquivo) e o `ads-test` planeja o teste. Subir só com o "pode" do usuário (regra 1).
+4. **Jhon, quando o teste tiver resultado:** anotar no `trafego.md`, seção "Criativos", qual gancho/peça ganhou e qual perdeu (com o número: CTR, CPA ou ROAS e a data). O Rick e o Gab leem essa seção antes do próximo criativo, então é ela que faz o time aprender.
 
 Pedido de criativo estático que chega no Jhon: fazer o brief e chamar o `/orick` (ferramenta Skill) com o caminho do brief. O Rick lê o `clientes/<cliente>/trafego.md` direto quando só precisa de contexto.
 
