@@ -974,8 +974,9 @@ function desenharConcorrentes() {
     res.forEach((r) => {
       const li = el('div', 'lc');
       const nm = el('div'); nm.append(el('b', null, r.anunciante), el('small', null, r.categoria + ' · no ar desde ' + r.desde.split('-').reverse().join('/')));
-      const ad = ads.find((x) => x.anunciante === r.anunciante);
-      const bt = el('button', 'mini-play'); bt.textContent = '▶'; bt.setAttribute('aria-label', 'Assistir anúncio de ' + r.anunciante);
+      const ad = ads.find((x) => x.anunciante === r.anunciante && x.miniatura) || ads.find((x) => x.anunciante === r.anunciante);
+      const bt = el('button', 'mini-play' + (ad && ad.miniatura ? ' com-mini' : '')); bt.textContent = '▶'; bt.setAttribute('aria-label', 'Assistir anúncio de ' + r.anunciante);
+      if (ad && ad.miniatura) bt.style.backgroundImage = 'url("' + ad.miniatura + '")';
       if (ad) bt.addEventListener('click', () => player(ad.link)); else bt.disabled = true;
       li.append(bt, nm, el('span', 'lc-leitura', r.leitura)); if (ad) { const bx = botaoBaixar(ad, r.anunciante); bx.classList.add('lc-baixar'); li.append(bx); }
       ul.append(li);
@@ -989,7 +990,7 @@ function desenharConcorrentes() {
       const c = el('div', 'teste anuncio');
       const top = el('div', 'teste-top'); top.append(el('b', null, a.anunciante));
       const dd = diasNoAr(a.desde, d.atualizado); const pill = el('span', 'pill', dd + ' dias'); pill.dataset.p = dd >= 60 ? 'bom' : 'atenção'; top.append(pill);
-      const tela = el('button', 'tela' + (a.miniatura ? ' com-mini' : '')); if (a.miniatura) tela.style.backgroundImage = 'url("' + a.miniatura + '")'; tela.append(el('span', 'play', '▶'), el('small', null, 'Assistir na Biblioteca')); tela.addEventListener('click', () => player(a.link));
+      const tela = el('button', 'tela' + (a.miniatura ? ' com-mini' : '')); if (a.miniatura) tela.style.backgroundImage = 'url("' + a.miniatura + '")'; tela.append(el('span', 'play', '▶'), el('small', null, a.fora_do_ar ? 'Saiu do ar' : 'Assistir')); tela.addEventListener('click', () => player(a.link));
       c.append(top, tela, el('q', null, a.texto), el('small', null, a.categoria + ' · ID ' + a.id), botaoBaixar(a));
       grade.append(c);
     });

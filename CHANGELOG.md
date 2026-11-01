@@ -2,6 +2,9 @@
 
 Mais novo em cima. Cada versão é uma linha `## AAAA.MM.DD-N (DD/MM/AAAA)` seguida do que mudou, em linguagem de usuário.
 
+## 2026.11.01-1 (01/11/2026)
+- **Campeões da concorrência sempre no painel, com miniatura:** quando o Jhon acha concorrentes, ou quando você abre os concorrentes de um cliente, ele monta os criativos campeões e grava a capa de cada um sozinho (`painel/capas.js` na página da Biblioteca + `painel/miniaturas.py`). O painel avisa o que falta (`FALTAM_MINIATURAS`, `CAMPEOES_FALTANDO`) e o Jhon só mostra depois de zerar. A lista "Outros concorrentes" agora mostra a capa, e anúncio que saiu do ar aparece como "Saiu do ar". O vídeo continua só um a um, quando você pede.
+
 ## 2026.10.29-12 (29/10/2026)
 - **Todas as contas atualizadas a cada chamada:** toda vez que o Jhon é chamado, ainda no passo zero, ele puxa as contas de anúncio pelo MCP do Meta e manda os números para o CRM de cada cliente que tem um (ou para o painel, quem não tem CRM). Funciona em qualquer máquina: o endereço e a senha de envio do CRM vão no `crm.json` do cliente, que viaja pelo Drive, e o envio é o `painel/crm.py` (passo a passo em `painel/CRM.md`).
 

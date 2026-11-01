@@ -62,6 +62,21 @@ def marcar_videos(nome, d):
             c.pop("video_local", None)
 
 
+def marcar_miniaturas(nome, d):
+    """Liga a miniatura de todo campeão/anúncio que tem clientes/<nome>/miniaturas/<id>.jpg; devolve os IDs sem miniatura."""
+    pasta = os.path.join(CLIENTES, nome, "miniaturas")
+    itens = [c for p in d.get("concorrentes_principais", []) for c in p.get("campeoes", [])] + d.get("concorrentes", [])
+    faltam = []
+    for c in itens:
+        if os.path.isfile(os.path.join(pasta, f"{c.get('id')}.jpg")):
+            c["miniatura"] = f"../clientes/{nome}/miniaturas/{c['id']}.jpg"
+        else:
+            c.pop("miniatura", None)
+            if not c.get("fora_do_ar") and str(c.get("id")) not in faltam:
+                faltam.append(str(c.get("id")))
+    return faltam
+
+
 def carregar():
     dados, erros = {}, []
     if not os.path.isdir(CLIENTES):
@@ -77,9 +92,14 @@ def carregar():
             erros.append(f"{nome}: painel.json inválido ({e})")
             continue
         marcar_videos(nome, d)
+        sem_mini = marcar_miniaturas(nome, d)
         falta = [k for k in OBRIGATORIOS if k not in d]
         if falta:
             erros.append(f"{nome}: falta {', '.join(falta)}")
+        if (d.get("concorrentes") or d.get("concorrentes_principais")) and not d.get("concorrentes_principais"):
+            erros.append(f"CAMPEOES_FALTANDO: {nome} tem concorrentes sem concorrentes_principais/campeoes (puxar pela Biblioteca agora)")
+        if sem_mini:
+            erros.append(f"FALTAM_MINIATURAS: {nome}: {len(sem_mini)} ({', '.join(sem_mini)}) -> painel/miniaturas.py --cliente {nome} --faltam")
         dados[nome] = d
     return dados, erros
 
