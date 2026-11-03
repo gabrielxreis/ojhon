@@ -121,6 +121,7 @@ def main():
     ap.add_argument("--nao-abrir", action="store_true", help="só gera o dados.js")
     ap.add_argument("--abrir", action="store_true", help="abre uma aba mesmo que já tenha aberto há pouco")
     ap.add_argument("--checar", action="store_true", help="só valida os painel.json")
+    ap.add_argument("--idioma", choices=["pt", "en"], help="idioma do painel: o da conversa (fica gravado em painel/.idioma)")
     a = ap.parse_args()
 
     dados, erros = carregar()
@@ -136,10 +137,15 @@ def main():
     if a.cliente and a.cliente not in dados:
         print(f"AVISO: {a.cliente} sem painel.json; abrindo {atual}")
 
+    arq_idioma = os.path.join(AQUI, ".idioma")
+    if a.idioma:
+        with open(arq_idioma, "w") as f:
+            f.write(a.idioma)
+    idioma = a.idioma or (open(arq_idioma).read().strip() if os.path.isfile(arq_idioma) else "pt")
     corpo = json.dumps(dados, ensure_ascii=False, sort_keys=True)
-    versao = hashlib.sha1((corpo + atual).encode("utf-8")).hexdigest()[:12]
+    versao = hashlib.sha1((corpo + atual + idioma).encode("utf-8")).hexdigest()[:12]
     js = ("window.JHON_DADOS = " + corpo + ";\nwindow.JHON_ATUAL = " + json.dumps(atual)
-          + ";\nwindow.JHON_VERSAO = " + json.dumps(versao) + ";\n")
+          + ";\nwindow.JHON_VERSAO = " + json.dumps(versao) + ";\nwindow.JHON_IDIOMA = " + json.dumps(idioma) + ";\n")
     fav = os.path.join(AQUI, "favorito.url.txt")
     if os.path.isfile(fav):
         js += "window.JHON_FAVORITO = " + json.dumps(open(fav, encoding="utf-8").read().strip()) + ";\n"

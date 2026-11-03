@@ -7,3 +7,5 @@ __pycache__/
 painel/dados.js
 painel/.aberto
 painel/.servidor.log
+painel/.progresso.json
+painel/.idioma
